@@ -6,7 +6,6 @@ import {
   highestMetacriticGamesURL,
   newGamesURL,
   seachGameURL,
-  moreUpcomingGamesURL,
 } from "../api";
 
 //Action Creator
@@ -61,23 +60,6 @@ export const loadFromLocal = () => async (dispatch) => {
       new: JSON.parse(localStorage.getItem("new")),
     },
   });
-};
-
-export const loadMoreOfCategory = (category) => async (dispatch) => {
-  dispatch({
-    type: "LOADING_GAMES",
-  });
-  switch (category) {
-    case "upcoming": {
-      const moreUpcoming = await axios.get(moreUpcomingGamesURL());
-      dispatch({
-        type: "LOADING_CATEGORY_GAMES",
-        payload: {
-          category: moreUpcoming.data.results,
-        },
-      });
-    }
-  }
 };
 
 export const fetchSearch = (game_name) => async (dispatch) => {

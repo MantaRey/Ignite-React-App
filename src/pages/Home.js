@@ -1,22 +1,17 @@
 import React, { useEffect, useState } from "react";
 //Redux
 import { useDispatch, useSelector } from "react-redux";
-import {
-  loadGames,
-  loadFromLocal,
-  loadMoreOfCategory,
-} from "../actions/gamesAction";
+import { loadGames, loadFromLocal } from "../actions/gamesAction";
 //Components
 import Game from "../components/Game";
 import GameDetail from "../components/GameDetail";
-import Category from "../pages/Category";
 //Styling and Animation
 import styled from "styled-components";
-import { motion, AnimatePresence, AnimateSharedLayout } from "framer-motion";
+import { motion } from "framer-motion";
 import { useScroll } from "../components/useScroll";
 import { lineAnim } from "../animations";
 //Routing
-import { useLocation, Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const Home = () => {
   //Get Current Location
@@ -52,28 +47,6 @@ const Home = () => {
     searched,
     isLoading,
   } = useSelector((state) => state.games);
-
-  //States
-  const [category, setCategory] = useState("");
-  const [displayCategory, setDisplayCategory] = useState(false);
-  //How many Games to show for each Category
-  const [numberOfUpcomingGames, setNumberOfUpcomingGames] = useState(12);
-  const [numberOfPopularGames, setNumberOfPopularGames] = useState(12);
-  const [numberOfFavoriteGames, setNumberOfFavoriteGames] = useState(12);
-  const [numberOfCriticGames, setNumberOfCriticGames] = useState(12);
-  const [numberOfNewGames, setNumberOfNewGames] = useState(12);
-  //Button Text
-  const [upcomingButtonText, setUpcomingButtonText] = useState(
-    "+ Upcoming Games"
-  );
-  const [popularButtonText, setPopularButtonText] = useState("+ Popular Games");
-  const [favoriteButtonText, setFavoriteButtonText] = useState(
-    "+ Fan Favorite Games"
-  );
-  const [criticButtonText, setCriticButtonText] = useState(
-    "+ Critic Favorite Games"
-  );
-  const [newButtonText, setNewButtonText] = useState("+ Newly Added Games");
 
   const getLocalGameData = () => {
     if (localStorage.getItem("popular") === null) {
@@ -117,12 +90,6 @@ const Home = () => {
     }
   };
 
-  //Fetch More Games of Specific Category
-  const getMoreGames = (category) => {
-    setDisplayCategory(true);
-    dispatch(loadMoreOfCategory(category));
-  };
-
   //Scroll Animation Set-up for Line
   const [element, controls] = useScroll();
   const [element2, controls2] = useScroll();
@@ -134,12 +101,9 @@ const Home = () => {
     <>
       {!isLoading && (
         <GameList>
-          {/* <AnimateSharedLayout> */}
-          {/* <AnimatePresence> */}
           {(pathGameID && <GameDetail pathId={pathGameID} />) ||
             scrollBarHandler()}
-          {/* </AnimatePresence> */}
-          {/* Wrap component in AnimatePresence and the component should have some sort of toggle with it */}
+
           {searched.length ? (
             // truthy vs falsey values, searched is initially empty array (=== true), searched.length when empty is 0 (===false)
             <div className="searched">
@@ -168,27 +132,11 @@ const Home = () => {
             className="line"
           ></motion.div>
           <Games>
-            {upcoming.slice(0, numberOfUpcomingGames).map((game) => (
+            {upcoming.map((game) => (
               <Game game={game} key={game.id} />
             ))}
           </Games>
-          <Button>
-            <button
-              onClick={() => {
-                if (upcomingButtonText[0] === "+") {
-                  setNumberOfUpcomingGames(48);
-                  setUpcomingButtonText("- Upcoming Games");
-                } else {
-                  setNumberOfUpcomingGames(12);
-                  setUpcomingButtonText("+ Upcoming Games");
-                  document.getElementById("upcoming").scrollIntoView();
-                }
-                // getMoreGames("upcoming");
-              }}
-            >
-              {upcomingButtonText}
-            </button>
-          </Button>
+
           <h2 id="popular">Popular Games</h2>
           <motion.div
             variants={lineAnim}
@@ -198,27 +146,11 @@ const Home = () => {
             className="line"
           ></motion.div>
           <Games>
-            {popular.slice(0, numberOfPopularGames).map((game) => (
+            {popular.map((game) => (
               <Game game={game} key={game.id} />
             ))}
           </Games>
-          <Button>
-            <button
-              onClick={() => {
-                if (popularButtonText[0] === "+") {
-                  setNumberOfPopularGames(48);
-                  setPopularButtonText("- Popular Games");
-                } else {
-                  setNumberOfPopularGames(12);
-                  setPopularButtonText("+ Popular Games");
-                  document.getElementById("popular").scrollIntoView();
-                }
-                // getMoreGames("upcoming");
-              }}
-            >
-              {popularButtonText}
-            </button>
-          </Button>
+
           <h2 id="favorite">Fan Favorite Games</h2>
           <motion.div
             variants={lineAnim}
@@ -228,7 +160,7 @@ const Home = () => {
             className="line"
           ></motion.div>
           <Games>
-            {highest_rated.slice(0, numberOfFavoriteGames).map((game) => (
+            {highest_rated.map((game) => (
               <Game game={game} key={game.id} />
             ))}
           </Games>
@@ -241,7 +173,7 @@ const Home = () => {
             className="line"
           ></motion.div>
           <Games>
-            {highest_metacritic.slice(0, numberOfCriticGames).map((game) => (
+            {highest_metacritic.map((game) => (
               <Game game={game} key={game.id} />
             ))}
           </Games>
@@ -254,11 +186,10 @@ const Home = () => {
             className="line"
           ></motion.div>
           <Games>
-            {recent.slice(0, numberOfNewGames).map((game) => (
+            {recent.map((game) => (
               <Game game={game} key={game.id} />
             ))}
           </Games>
-          {/* </AnimateSharedLayout> */}
         </GameList>
       )}
     </>
@@ -274,34 +205,6 @@ const GameList = styled(motion.div)`
     height: 0.25rem;
     background: #ff7676;
     margin-bottom: 3rem;
-  }
-`;
-
-const Button = styled(motion.div)`
-  /* background: yellow; */
-  display: flex;
-  justify-content: flex-end;
-  padding: 2rem 0rem;
-  button {
-    min-height: 4vh;
-    font-size: 1.5rem;
-    margin-top: 1rem;
-    border: none;
-    padding: 0.5rem 2rem;
-    cursor: pointer;
-    color: #ff7676;
-    background: white;
-    /* background: #ff7676;
-    color: white; */
-    /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); */
-    &:hover {
-      background: #ff7676;
-      color: white;
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-
-      /* color: #ff7676;
-      background: white; */
-    }
   }
 `;
 
