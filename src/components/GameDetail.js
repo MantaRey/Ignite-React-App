@@ -20,7 +20,6 @@ import starFull from "../img/star_full.png";
 const GameDetail = ({ pathId }) => {
   //Current URL info
   const history = useHistory();
-  console.log(pathId);
 
   //Hide Home-Scrollbar while on GameDetails component
   //  Hot-Fix: Upon leaving Home ("/") to GameDetails component ("/game/:id") --> Scrolling on Home is disabled and Hidden

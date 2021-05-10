@@ -9,7 +9,7 @@ import {
 //Components
 import Game from "../components/Game";
 import GameDetail from "../components/GameDetail";
-import Category from "../pages/Category";
+import Category from "../components/Category";
 //Styling and Animation
 import styled from "styled-components";
 import { motion, AnimatePresence, AnimateSharedLayout } from "framer-motion";
@@ -23,6 +23,9 @@ const Home = () => {
   const location = useLocation();
   const pathGameID = location.pathname.split("/")[2]
     ? location.pathname.split("/")[2]
+    : "";
+  const pathGameID2 = location.pathname.split("/")[3]
+    ? location.pathname.split("/")[3]
     : "";
 
   //Show Home-Scrollbar while on Home Page
@@ -55,37 +58,6 @@ const Home = () => {
 
   //States
   const [category, setCategory] = useState("");
-  const [displayCategory, setDisplayCategory] = useState(false);
-  //How many Games to show for each Category
-  const [numberOfUpcomingGames, setNumberOfUpcomingGames] = useState(12);
-  const [numberOfPopularGames, setNumberOfPopularGames] = useState(12);
-  const [numberOfFavoriteGames, setNumberOfFavoriteGames] = useState(12);
-  const [numberOfCriticGames, setNumberOfCriticGames] = useState(12);
-  const [numberOfNewGames, setNumberOfNewGames] = useState(12);
-  //Button Text
-  const [upcomingButtonText, setUpcomingButtonText] = useState(
-    "+ Upcoming Games"
-  );
-  const [popularButtonText, setPopularButtonText] = useState("+ Popular Games");
-  const [favoriteButtonText, setFavoriteButtonText] = useState(
-    "+ Fan Favorite Games"
-  );
-  const [criticButtonText, setCriticButtonText] = useState(
-    "+ Critic Favorite Games"
-  );
-  const [newButtonText, setNewButtonText] = useState("+ Newly Added Games");
-
-  const getLocalGameData = () => {
-    if (localStorage.getItem("popular") === null) {
-      localStorage.setItem("popular", JSON.stringify([]));
-      localStorage.setItem("new", JSON.stringify([]));
-      localStorage.setItem("upcoming", JSON.stringify([]));
-      localStorage.setItem("highest_rated", JSON.stringify([]));
-      localStorage.setItem("highest_metacritic", JSON.stringify([]));
-    } else {
-      dispatch(loadFromLocal());
-    }
-  };
 
   const compareSession = () => {
     //If user has yet to visit this site today, send API request. Else use Local Storage.
@@ -94,11 +66,9 @@ const Home = () => {
     let session = JSON.parse(localStorage.getItem("session"));
     console.log(session);
     if (session === null) {
-      //The user has never been to the site before
       console.log("The API is being used. No Session Available");
       return false;
     } else {
-      //The user has been to the site before
       session = new Date(session);
       console.log(session);
       if (
@@ -106,11 +76,9 @@ const Home = () => {
         date.getMonth() > session.getMonth() ||
         date.getDate() > session.getDate()
       ) {
-        //The user has not visited the site today
         console.log("The API is being used. Date has Changed");
         return false;
       } else {
-        //The user has visited the site today
         console.log("No API is used, only local storage");
         return true;
       }
@@ -119,7 +87,6 @@ const Home = () => {
 
   //Fetch More Games of Specific Category
   const getMoreGames = (category) => {
-    setDisplayCategory(true);
     dispatch(loadMoreOfCategory(category));
   };
 
@@ -132,135 +99,117 @@ const Home = () => {
 
   return (
     <>
-      {!isLoading && (
-        <GameList>
-          {/* <AnimateSharedLayout> */}
-          {/* <AnimatePresence> */}
-          {(pathGameID && <GameDetail pathId={pathGameID} />) ||
-            scrollBarHandler()}
-          {/* </AnimatePresence> */}
-          {/* Wrap component in AnimatePresence and the component should have some sort of toggle with it */}
-          {searched.length ? (
-            // truthy vs falsey values, searched is initially empty array (=== true), searched.length when empty is 0 (===false)
-            <div className="searched">
-              <h2>Searched Games</h2>
-              <motion.div
-                variants={lineAnim}
-                initial="hidden"
-                animate="show"
-                className="line"
-              ></motion.div>
-              <Games>
-                {searched.map((game) =>
-                  game.rating !== 0 ? <Game game={game} key={game.id} /> : ""
-                )}
-              </Games>
-            </div>
-          ) : (
-            ""
-          )}
-          <h2 id="upcoming">Upcoming Games</h2>
-          <motion.div
-            variants={lineAnim}
-            ref={element}
-            initial="hidden"
-            animate={controls}
-            className="line"
-          ></motion.div>
-          <Games>
-            {upcoming.slice(0, numberOfUpcomingGames).map((game) => (
-              <Game game={game} key={game.id} />
-            ))}
-          </Games>
-          <Button>
-            <button
-              onClick={() => {
-                if (upcomingButtonText[0] === "+") {
-                  setNumberOfUpcomingGames(48);
-                  setUpcomingButtonText("- Upcoming Games");
-                } else {
-                  setNumberOfUpcomingGames(12);
-                  setUpcomingButtonText("+ Upcoming Games");
-                  document.getElementById("upcoming").scrollIntoView();
-                }
-                // getMoreGames("upcoming");
-              }}
-            >
-              {upcomingButtonText}
-            </button>
-          </Button>
-          <h2 id="popular">Popular Games</h2>
-          <motion.div
-            variants={lineAnim}
-            ref={element2}
-            initial="hidden"
-            animate={controls2}
-            className="line"
-          ></motion.div>
-          <Games>
-            {popular.slice(0, numberOfPopularGames).map((game) => (
-              <Game game={game} key={game.id} />
-            ))}
-          </Games>
-          <Button>
-            <button
-              onClick={() => {
-                if (popularButtonText[0] === "+") {
-                  setNumberOfPopularGames(48);
-                  setPopularButtonText("- Popular Games");
-                } else {
-                  setNumberOfPopularGames(12);
-                  setPopularButtonText("+ Popular Games");
-                  document.getElementById("popular").scrollIntoView();
-                }
-                // getMoreGames("upcoming");
-              }}
-            >
-              {popularButtonText}
-            </button>
-          </Button>
-          <h2 id="favorite">Fan Favorite Games</h2>
-          <motion.div
-            variants={lineAnim}
-            ref={element3}
-            initial="hidden"
-            animate={controls3}
-            className="line"
-          ></motion.div>
-          <Games>
-            {highest_rated.slice(0, numberOfFavoriteGames).map((game) => (
-              <Game game={game} key={game.id} />
-            ))}
-          </Games>
-          <h2 id="critic">Critic Favorite Games</h2>
-          <motion.div
-            variants={lineAnim}
-            ref={element4}
-            initial="hidden"
-            animate={controls4}
-            className="line"
-          ></motion.div>
-          <Games>
-            {highest_metacritic.slice(0, numberOfCriticGames).map((game) => (
-              <Game game={game} key={game.id} />
-            ))}
-          </Games>
-          <h2 id="new">Newly Added Games</h2>
-          <motion.div
-            variants={lineAnim}
-            ref={element5}
-            initial="hidden"
-            animate={controls5}
-            className="line"
-          ></motion.div>
-          <Games>
-            {recent.slice(0, numberOfNewGames).map((game) => (
-              <Game game={game} key={game.id} />
-            ))}
-          </Games>
-          {/* </AnimateSharedLayout> */}
-        </GameList>
-      )}
+      {(!isLoading &&
+        pathGameID &&
+        isNaN(parseInt(pathGameID)) && [
+          <Category category={category}>{scrollBarHandler()}</Category>,
+          pathGameID2 && <GameDetail pathId={pathGameID2} />,
+        ]) ||
+        (!isLoading && (
+          <GameList>
+            {/* <AnimateSharedLayout> */}
+            {/* <AnimatePresence> */}
+            {(pathGameID && <GameDetail pathId={pathGameID} />) ||
+              scrollBarHandler()}
+            {/* </AnimatePresence> */}
+            {/* Wrap component in AnimatePresence and the component should have some sort of toggle with it */}
+            {searched.length ? (
+              // truthy vs falsey values, searched is initially empty array (=== true), searched.length when empty is 0 (===false)
+              <div className="searched">
+                <h2>Searched Games</h2>
+                <motion.div
+                  variants={lineAnim}
+                  initial="hidden"
+                  animate="show"
+                  className="line"
+                ></motion.div>
+                <Games>
+                  {searched.map((game) =>
+                    game.rating !== 0 ? <Game game={game} key={game.id} /> : ""
+                  )}
+                </Games>
+              </div>
+            ) : (
+              ""
+            )}
+            <h2>Upcoming Games</h2>
+            <motion.div
+              variants={lineAnim}
+              ref={element}
+              initial="hidden"
+              animate={controls}
+              className="line"
+            ></motion.div>
+            <Games>
+              {upcoming.map((game) => (
+                <Game game={game} key={game.id} />
+              ))}
+            </Games>
+            <Button>
+              <Link
+                onMouseOver={() => setCategory("upcoming")}
+                to={`/games/${category}`}
+              >
+                <button onClick={() => getMoreGames("upcoming")}>
+                  + Upcoming Games
+                </button>
+              </Link>
+            </Button>
+            <h2>Popular Games</h2>
+            <motion.div
+              variants={lineAnim}
+              ref={element2}
+              initial="hidden"
+              animate={controls2}
+              className="line"
+            ></motion.div>
+            <Games>
+              {popular.map((game) => (
+                <Game game={game} key={game.id} />
+              ))}
+            </Games>
+            <h2>Fan Favorite Games</h2>
+            <motion.div
+              variants={lineAnim}
+              ref={element3}
+              initial="hidden"
+              animate={controls3}
+              className="line"
+            ></motion.div>
+            <Games>
+              {highest_rated.map((game) => (
+                <Game game={game} key={game.id} />
+              ))}
+            </Games>
+            <h2>Critic Favorite Games</h2>
+            <motion.div
+              variants={lineAnim}
+              ref={element4}
+              initial="hidden"
+              animate={controls4}
+              className="line"
+            ></motion.div>
+            <Games>
+              {highest_metacritic.map((game) => (
+                <Game game={game} key={game.id} />
+              ))}
+            </Games>
+            <h2>Newly Added Games</h2>
+            <motion.div
+              variants={lineAnim}
+              ref={element5}
+              initial="hidden"
+              animate={controls5}
+              className="line"
+            ></motion.div>
+            <Games>
+              {recent.map((game) => (
+                <Game game={game} key={game.id} />
+              ))}
+            </Games>
+            {/* </AnimateSharedLayout> */}
+          </GameList>
+        ))}
     </>
   );
 };

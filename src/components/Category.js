@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import GameC from "../components/GameC";
 //Styling and Animation
 import styled from "styled-components";
-import { motion, AnimatePresence, AnimateSharedLayout } from "framer-motion";
+import { motion } from "framer-motion";
 
 const Category = ({ category }) => {
   //Data and Check if data is loaded
