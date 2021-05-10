@@ -12,7 +12,6 @@ const detailsReducer = (state = initState, action) => {
         game: action.payload.game,
         screen: action.payload.screenshots,
         isLoading: false,
-        // screen: action.payload.screen,
       };
     case "LOADING_DETAILS":
       return {

@@ -20,7 +20,6 @@ import starFull from "../img/star_full.png";
 const GameDetail = ({ pathId }) => {
   //Current URL info
   const history = useHistory();
-  console.log(pathId);
 
   //Hide Home-Scrollbar while on GameDetails component
   //  Hot-Fix: Upon leaving Home ("/") to GameDetails component ("/game/:id") --> Scrolling on Home is disabled and Hidden
@@ -276,8 +275,6 @@ const Stats = styled(motion.div)`
 
 const Info = styled(motion.div)`
   /* background: red; */
-  /* text-align: left;
-  overflow: hidden; */
 `;
 
 const Important = styled(motion.div)`
@@ -292,19 +289,10 @@ const Important = styled(motion.div)`
 
 const Platform = styled(motion.div)`
   /* background: green; */
-  /* padding: 0rem 3rem 0rem 0rem;
-  margin: 0rem 3rem 0rem 0rem; */
-  /* display: flex; */
   padding: 0.5rem 2rem;
   flex-basis: 15rem; // Used to be 15rem and looked awesome for games with 6 platforms, but sucked for 2-3
   @media (max-width: 1750px) {
     flex-basis: 15rem;
-  }
-  img {
-    /* display: block;
-    margin-left: auto;
-    margin-right: auto; */
-    // Uhh i think i need this if i reverse changes
   }
 `;
 

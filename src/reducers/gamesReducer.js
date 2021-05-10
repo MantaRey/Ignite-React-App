@@ -5,7 +5,6 @@ const initState = {
   highest_rated: [],
   highest_metacritic: [],
   searched: [],
-  category_specific: [],
   isLoading: true,
 };
 

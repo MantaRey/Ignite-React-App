@@ -40,9 +40,6 @@ export const popularGamesURL = () => `${base_url}${popular_games}`;
 //Upcoming Games
 const upcoming_games = `games?${key_url}&dates=${currentDate},${nextYear}&ordering=-added&page_size=48`;
 export const upcomingGamesURL = () => `${base_url}${upcoming_games}`;
-//More Upcoming Games
-const more_upcoming_games = `games?${key_url}&dates=${currentDate},${nextYear}&ordering=-added&page_size=48`;
-export const moreUpcomingGamesURL = () => `${base_url}${more_upcoming_games}`;
 
 //Highest User Rated Games
 const highest_rated = `games?${key_url}&dates=${lastYear},${currentDate}&ordering=-rating&page_size=48`;

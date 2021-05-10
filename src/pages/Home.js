@@ -1,22 +1,17 @@
 import React, { useEffect, useState } from "react";
 //Redux
 import { useDispatch, useSelector } from "react-redux";
-import {
-  loadGames,
-  loadFromLocal,
-  loadMoreOfCategory,
-} from "../actions/gamesAction";
+import { loadGames, loadFromLocal } from "../actions/gamesAction";
 //Components
 import Game from "../components/Game";
 import GameDetail from "../components/GameDetail";
-import Category from "../pages/Category";
 //Styling and Animation
 import styled from "styled-components";
 import { motion, AnimatePresence, AnimateSharedLayout } from "framer-motion";
 import { useScroll } from "../components/useScroll";
 import { lineAnim } from "../animations";
 //Routing
-import { useLocation, Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const Home = () => {
   //Get Current Location
@@ -53,9 +48,7 @@ const Home = () => {
     isLoading,
   } = useSelector((state) => state.games);
 
-  //States
-  const [category, setCategory] = useState("");
-  const [displayCategory, setDisplayCategory] = useState(false);
+  //States;
   //How many Games to show for each Category
   const [numberOfUpcomingGames, setNumberOfUpcomingGames] = useState(12);
   const [numberOfPopularGames, setNumberOfPopularGames] = useState(12);
@@ -63,9 +56,8 @@ const Home = () => {
   const [numberOfCriticGames, setNumberOfCriticGames] = useState(12);
   const [numberOfNewGames, setNumberOfNewGames] = useState(12);
   //Button Text
-  const [upcomingButtonText, setUpcomingButtonText] = useState(
-    "+ Upcoming Games"
-  );
+  const [upcomingButtonText, setUpcomingButtonText] =
+    useState("+ Upcoming Games");
   const [popularButtonText, setPopularButtonText] = useState("+ Popular Games");
   const [favoriteButtonText, setFavoriteButtonText] = useState(
     "+ Fan Favorite Games"
@@ -115,12 +107,6 @@ const Home = () => {
         return true;
       }
     }
-  };
-
-  //Fetch More Games of Specific Category
-  const getMoreGames = (category) => {
-    setDisplayCategory(true);
-    dispatch(loadMoreOfCategory(category));
   };
 
   //Scroll Animation Set-up for Line
@@ -278,7 +264,6 @@ const GameList = styled(motion.div)`
 `;
 
 const Button = styled(motion.div)`
-  /* background: yellow; */
   display: flex;
   justify-content: flex-end;
   padding: 2rem 0rem;
@@ -291,16 +276,10 @@ const Button = styled(motion.div)`
     cursor: pointer;
     color: #ff7676;
     background: white;
-    /* background: #ff7676;
-    color: white; */
-    /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); */
     &:hover {
       background: #ff7676;
       color: white;
       box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-
-      /* color: #ff7676;
-      background: white; */
     }
   }
 `;
