@@ -153,7 +153,7 @@ const Home = () => {
             animate={controls}
             className="line"
           ></motion.div>
-          <Games>
+          <Games id="upcoming_container">
             {upcoming.slice(0, numberOfUpcomingGames).map((game) => (
               <Game game={game} key={game.id} />
             ))}
@@ -199,7 +199,6 @@ const Home = () => {
                   setPopularButtonText("+ Popular Games");
                   document.getElementById("popular").scrollIntoView();
                 }
-                // getMoreGames("upcoming");
               }}
             >
               {popularButtonText}
@@ -214,10 +213,32 @@ const Home = () => {
             className="line"
           ></motion.div>
           <Games>
-            {highest_rated.slice(0, numberOfFavoriteGames).map((game) => (
-              <Game game={game} key={game.id} />
-            ))}
+            {highest_rated
+              .slice(0, numberOfFavoriteGames)
+              .map((game) =>
+                game.reviews_count > 10 ? (
+                  <Game game={game} key={game.id} />
+                ) : (
+                  ""
+                )
+              )}
           </Games>
+          <Button>
+            <button
+              onClick={() => {
+                if (favoriteButtonText[0] === "+") {
+                  setNumberOfFavoriteGames(48);
+                  setFavoriteButtonText("- Fan Favorite Games");
+                } else {
+                  setNumberOfFavoriteGames(12);
+                  setFavoriteButtonText("+ Fan Favorite Games");
+                  document.getElementById("favorite").scrollIntoView();
+                }
+              }}
+            >
+              {favoriteButtonText}
+            </button>
+          </Button>
           <h2 id="critic">Critic Favorite Games</h2>
           <motion.div
             variants={lineAnim}
@@ -231,6 +252,22 @@ const Home = () => {
               <Game game={game} key={game.id} />
             ))}
           </Games>
+          <Button>
+            <button
+              onClick={() => {
+                if (criticButtonText[0] === "+") {
+                  setNumberOfCriticGames(48);
+                  setCriticButtonText("- Critic Favorite Games");
+                } else {
+                  setNumberOfCriticGames(12);
+                  setCriticButtonText("+ Critic Favorite Games");
+                  document.getElementById("critic").scrollIntoView();
+                }
+              }}
+            >
+              {criticButtonText}
+            </button>
+          </Button>
           <h2 id="new">Newly Added Games</h2>
           <motion.div
             variants={lineAnim}
@@ -244,6 +281,22 @@ const Home = () => {
               <Game game={game} key={game.id} />
             ))}
           </Games>
+          <Button>
+            <button
+              onClick={() => {
+                if (newButtonText[0] === "+") {
+                  setNumberOfNewGames(48);
+                  setNewButtonText("- Newly Added Games");
+                } else {
+                  setNumberOfNewGames(12);
+                  setNewButtonText("+ Newly Added Games");
+                  document.getElementById("new").scrollIntoView();
+                }
+              }}
+            >
+              {newButtonText}
+            </button>
+          </Button>
           {/* </AnimateSharedLayout> */}
         </GameList>
       )}

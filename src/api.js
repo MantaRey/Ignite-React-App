@@ -32,6 +32,7 @@ const currentDay = getCurrentDay();
 const currentDate = `${currentYear}-${currentMonth}-${currentDay}`;
 const lastYear = `${currentYear - 1}-${currentMonth}-${currentDay}`;
 const nextYear = `${currentYear + 1}-${currentMonth}-${currentDay}`;
+const twoYearsAgo = `${currentYear - 2}-${currentMonth}-${currentDay}`;
 
 //Popular Games
 const popular_games = `games?${key_url}&dates=${lastYear},${currentDate}&ordering=-added&page_size=48`;
@@ -42,11 +43,11 @@ const upcoming_games = `games?${key_url}&dates=${currentDate},${nextYear}&orderi
 export const upcomingGamesURL = () => `${base_url}${upcoming_games}`;
 
 //Highest User Rated Games
-const highest_rated = `games?${key_url}&dates=${lastYear},${currentDate}&ordering=-rating&page_size=48`;
+const highest_rated = `games?${key_url}&dates=${twoYearsAgo},${currentDate}&ordering=-rating&page_size=48`;
 export const highestRatedGamesURL = () => `${base_url}${highest_rated}`;
 
 //Highest Metacritic Games
-const highest_metacritic = `games?${key_url}&dates=${lastYear},${currentDate}&ordering=-metacritic&page_size=48`;
+const highest_metacritic = `games?${key_url}&dates=${twoYearsAgo},${currentDate}&ordering=-metacritic&page_size=48`;
 export const highestMetacriticGamesURL = () =>
   `${base_url}${highest_metacritic}`;
 

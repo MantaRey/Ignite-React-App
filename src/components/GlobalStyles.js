@@ -30,11 +30,17 @@ h3 {
     font-size: 1.3rem;
     color: #333;
     padding: 1.5rem 0rem;
+    @media (max-width: 768px) {
+        font-size: 1rem;
+  }
 }
 p {
     font-size: 1.2rem;
     line-height: 200%;
-    color: #696969
+    color: #696969;
+    @media (max-width: 768px) {
+        font-size: .8rem;
+  }
 }
 a {
     font-size: 1.3rem;
