@@ -66,6 +66,13 @@ const Home = () => {
     "+ Critic Favorite Games"
   );
   const [newButtonText, setNewButtonText] = useState("+ Newly Added Games");
+  //Filter Buttons
+  const [popularFilter, setPopularFilter] = useState([
+    { name: "p1Y", isSelected: "selected" },
+    { name: "p2Y", isSelected: "unselected" },
+    { name: "p3Y", isSelected: "unselected" },
+    { name: "p5Y", isSelected: "unselected" },
+  ]);
 
   const getLocalGameData = () => {
     if (localStorage.getItem("popular") === null) {
@@ -115,6 +122,18 @@ const Home = () => {
   const [element3, controls3] = useScroll();
   const [element4, controls4] = useScroll();
   const [element5, controls5] = useScroll();
+
+  const updateSelectedHandler = (selected) => {
+    let updatedButtons = [];
+    popularFilter.map((button) => {
+      if (selected === button.name) {
+        updatedButtons.push({ name: button.name, isSelected: "selected" });
+      } else {
+        updatedButtons.push({ name: button.name, isSelected: "unselected" });
+      }
+    });
+    setPopularFilter(updatedButtons);
+  };
 
   return (
     <>
@@ -175,7 +194,39 @@ const Home = () => {
               {upcomingButtonText}
             </button>
           </Button>
-          <h2 id="popular">Popular Games</h2>
+          <Header>
+            <h2 id="popular">Popular Games</h2>
+            <div className="filter">
+              <button
+                onClick={() => updateSelectedHandler("p1Y")}
+                id="p1Y"
+                className={popularFilter[0].isSelected}
+              >
+                1Y
+              </button>
+              <button
+                onClick={() => updateSelectedHandler("p2Y")}
+                id="p2Y"
+                className={popularFilter[1].isSelected}
+              >
+                2Y
+              </button>
+              <button
+                onClick={() => updateSelectedHandler("p3Y")}
+                id="p3Y"
+                className={popularFilter[2].isSelected}
+              >
+                3Y
+              </button>
+              <button
+                onClick={() => updateSelectedHandler("p5Y")}
+                id="p5Y"
+                className={popularFilter[3].isSelected}
+              >
+                5Y
+              </button>
+            </div>
+          </Header>
           <motion.div
             variants={lineAnim}
             ref={element2}
@@ -353,6 +404,40 @@ const Games = styled(motion.div)`
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     grid-column-gap: 1rem;
     grid-row-gap: 1.25rem;
+  }
+`;
+
+const Header = styled(motion.div)`
+  /* background: pink; */
+  display: flex;
+  justify-content: space-between;
+  h2 {
+    /* background: blue; */
+    padding: 5rem 0rem 1rem 0rem;
+  }
+  .filter {
+    /* background: red; */
+    padding: 5rem 0rem 1rem 0rem;
+    button {
+      min-height: 4vh;
+      font-size: 1.5rem;
+      margin-top: 1rem;
+      border: none;
+      padding: 0.5rem 2rem;
+      cursor: pointer;
+      color: #ff7676;
+      background: white;
+      &:hover {
+        background: #ff7676;
+        color: white;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      }
+    }
+    .selected {
+      background: #ff7676;
+      color: white;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    }
   }
 `;
 
