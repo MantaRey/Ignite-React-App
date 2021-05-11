@@ -102,14 +102,18 @@ const Home = () => {
       {(!isLoading &&
         pathGameID &&
         isNaN(parseInt(pathGameID)) && [
-          <Category category={category}>{scrollBarHandler()}</Category>,
-          pathGameID2 && <GameDetail pathId={pathGameID2} />,
+          <Category category={category} key={pathGameID}>
+            {scrollBarHandler()}
+          </Category>,
+          pathGameID2 && <GameDetail pathId={pathGameID2} key={pathGameID2} />,
         ]) ||
         (!isLoading && (
           <GameList>
             {/* <AnimateSharedLayout> */}
             {/* <AnimatePresence> */}
-            {(pathGameID && <GameDetail pathId={pathGameID} />) ||
+            {(pathGameID && (
+              <GameDetail pathId={pathGameID} key={pathGameID} />
+            )) ||
               scrollBarHandler()}
             {/* </AnimatePresence> */}
             {/* Wrap component in AnimatePresence and the component should have some sort of toggle with it */}
@@ -168,6 +172,16 @@ const Home = () => {
                 <Game game={game} key={game.id} />
               ))}
             </Games>
+            <Button>
+              <Link
+                onMouseOver={() => setCategory("popular")}
+                to={`/games/${category}`}
+              >
+                <button onClick={() => getMoreGames("popular")}>
+                  + Popular Games
+                </button>
+              </Link>
+            </Button>
             <h2>Fan Favorite Games</h2>
             <motion.div
               variants={lineAnim}
@@ -181,6 +195,16 @@ const Home = () => {
                 <Game game={game} key={game.id} />
               ))}
             </Games>
+            <Button>
+              <Link
+                onMouseOver={() => setCategory("highest_rated")}
+                to={`/games/${category}`}
+              >
+                <button onClick={() => getMoreGames("highest_rated")}>
+                  + Fan Favorite Games
+                </button>
+              </Link>
+            </Button>
             <h2>Critic Favorite Games</h2>
             <motion.div
               variants={lineAnim}
@@ -194,6 +218,16 @@ const Home = () => {
                 <Game game={game} key={game.id} />
               ))}
             </Games>
+            <Button>
+              <Link
+                onMouseOver={() => setCategory("highest_metacritic")}
+                to={`/games/${category}`}
+              >
+                <button onClick={() => getMoreGames("highest_metacritic")}>
+                  + Critic Favorite Games
+                </button>
+              </Link>
+            </Button>
             <h2>Newly Added Games</h2>
             <motion.div
               variants={lineAnim}
@@ -207,6 +241,16 @@ const Home = () => {
                 <Game game={game} key={game.id} />
               ))}
             </Games>
+            <Button>
+              <Link
+                onMouseOver={() => setCategory("recent")}
+                to={`/games/${category}`}
+              >
+                <button onClick={() => getMoreGames("recent")}>
+                  + Newly Added Games
+                </button>
+              </Link>
+            </Button>
             {/* </AnimateSharedLayout> */}
           </GameList>
         ))}
@@ -240,16 +284,10 @@ const Button = styled(motion.div)`
     cursor: pointer;
     color: #ff7676;
     background: white;
-    /* background: #ff7676;
-    color: white; */
-    /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); */
     &:hover {
       background: #ff7676;
       color: white;
       box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-
-      /* color: #ff7676;
-      background: white; */
     }
   }
 `;

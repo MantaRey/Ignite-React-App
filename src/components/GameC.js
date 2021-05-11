@@ -1,3 +1,7 @@
+/*
+This Component is the same as in Game.js; However the Link tag goes to a different url because these are Category games not Home Page games
+*/
+
 import React from "react";
 //Redux
 import { useDispatch, useSelector } from "react-redux";

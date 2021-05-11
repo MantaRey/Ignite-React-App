@@ -7,6 +7,10 @@ import {
   newGamesURL,
   seachGameURL,
   moreUpcomingGamesURL,
+  morePopularGamesURL,
+  moreHighestRatedGamesURL,
+  moreHighestMetacriticGamesURL,
+  moreNewGamesURL,
 } from "../api";
 
 //Action Creator
@@ -67,17 +71,32 @@ export const loadMoreOfCategory = (category) => async (dispatch) => {
   dispatch({
     type: "LOADING_GAMES",
   });
+  let category_games;
   switch (category) {
-    case "upcoming": {
-      const moreUpcoming = await axios.get(moreUpcomingGamesURL());
-      dispatch({
-        type: "LOADING_CATEGORY_GAMES",
-        payload: {
-          category: moreUpcoming.data.results,
-        },
-      });
-    }
+    case "upcoming":
+      category_games = await axios.get(moreUpcomingGamesURL());
+      break;
+    case "popular":
+      category_games = await axios.get(morePopularGamesURL());
+      break;
+    case "highest_rated":
+      category_games = await axios.get(moreHighestRatedGamesURL());
+      break;
+    case "highest_metacritic":
+      category_games = await axios.get(moreHighestMetacriticGamesURL());
+      break;
+    case "recent":
+      category_games = await axios.get(moreNewGamesURL());
+      break;
+    default:
+      category_games = await axios.get(moreUpcomingGamesURL());
   }
+  dispatch({
+    type: "LOADING_CATEGORY_GAMES",
+    payload: {
+      category: category_games.data.results,
+    },
+  });
 };
 
 export const fetchSearch = (game_name) => async (dispatch) => {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 //Redux
 import { useSelector } from "react-redux";
 //Components
@@ -6,21 +6,51 @@ import GameC from "../components/GameC";
 //Styling and Animation
 import styled from "styled-components";
 import { motion } from "framer-motion";
+import { useScroll } from "../components/useScroll";
+import { lineAnim } from "../animations";
 
 const Category = ({ category }) => {
   //Data and Check if data is loaded
   const { category_specific, isLoading } = useSelector((state) => state.games);
 
+  //Scroll Animation Set-up for Line
+  const [element, controls] = useScroll();
+
+  //State
+  const [title, setTitle] = useState("");
+  //UseEffect to Set State(title)
+  useEffect(() => {
+    switch (category) {
+      case "upcoming":
+        setTitle("Upcoming Games");
+        break;
+      case "popular":
+        setTitle("Popular Games");
+        break;
+      case "highest_rated":
+        setTitle("Fan Favorite Games");
+        break;
+      case "highest_metacritic":
+        setTitle("Critic Favorite Games");
+        break;
+      case "recent":
+        setTitle("Newly Added Games");
+        break;
+      default:
+        setTitle("");
+    }
+  }, [category]);
+
   return (
     <>
       {!isLoading && (
         <GameList>
-          <h2>Upcoming Games</h2>
+          <h2>{title}</h2>
           <motion.div
-            // variants={lineAnim}
-            // ref={element}
-            // initial="hidden"
-            // animate={controls}
+            variants={lineAnim}
+            ref={element}
+            initial="hidden"
+            animate={controls}
             className="line"
           ></motion.div>
           <Games>
