@@ -5,7 +5,7 @@ const initState = {
   highest_rated: [],
   highest_metacritic: [],
   searched: [],
-  isLoading: true,
+  // isLoading: true,
 };
 
 const gamesReducer = (state = initState, action) => {
@@ -18,13 +18,13 @@ const gamesReducer = (state = initState, action) => {
         upcoming: action.payload.upcoming,
         highest_rated: action.payload.highest_rated,
         highest_metacritic: action.payload.highest_metacritic,
-        isLoading: false,
+        // isLoading: false,
       };
-    case "LOADING_GAMES":
-      return {
-        ...state,
-        isLoading: true,
-      };
+    // case "LOADING_GAMES":
+    //   return {
+    //     ...state,
+    //     isLoading: true,
+    //   };
     case "LOADING_FROM_LOCAL":
       return {
         ...state,
@@ -33,13 +33,21 @@ const gamesReducer = (state = initState, action) => {
         upcoming: action.payload.upcoming,
         highest_rated: action.payload.highest_rated,
         highest_metacritic: action.payload.highest_metacritic,
-        isLoading: false,
       };
-    case "LOADING_CATEGORY_GAMES":
+    case "LOADING_FILTERED_POPULAR":
       return {
         ...state,
-        category_specific: action.payload.category,
-        isLoading: false,
+        popular: action.payload.filtered,
+      };
+    case "LOADING_FILTERED_FAVORITE":
+      return {
+        ...state,
+        highest_rated: action.payload.filtered,
+      };
+    case "LOADING_FILTERED_CRITIC":
+      return {
+        ...state,
+        highest_metacritic: action.payload.filtered,
       };
     case "FETCH_SEARCHED":
       return {

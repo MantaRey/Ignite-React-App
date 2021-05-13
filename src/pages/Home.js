@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 //Redux
 import { useDispatch, useSelector } from "react-redux";
-import { loadGames, loadFromLocal } from "../actions/gamesAction";
+import {
+  loadGames,
+  loadFromLocal,
+  loadFilteredGames,
+} from "../actions/gamesAction";
+import { initiateLoad, successfulLoad } from "../actions/metaDataAction";
 //Components
 import Game from "../components/Game";
 import GameDetail from "../components/GameDetail";
@@ -29,26 +34,28 @@ const Home = () => {
   //Fetch Games
   const dispatch = useDispatch();
   useEffect(() => {
+    // dispatch(initiateLoad());
     dispatch(loadFromLocal());
     const same_day_visit = compareSession();
     if (!same_day_visit) {
       localStorage.setItem("session", JSON.stringify(new Date()));
       dispatch(loadGames());
     }
+    // dispatch(successfulLoad());
   }, [dispatch]);
 
   //Get that data back and Check if it is loaded
+  const isLoading = useSelector((state) => state.meta.isLoading);
   const {
     popular,
-    recent,
     upcoming,
     highest_rated,
     highest_metacritic,
+    recent,
     searched,
-    isLoading,
   } = useSelector((state) => state.games);
 
-  //States;
+  //States
   //How many Games to show for each Category
   const [numberOfUpcomingGames, setNumberOfUpcomingGames] = useState(12);
   const [numberOfPopularGames, setNumberOfPopularGames] = useState(12);
@@ -66,25 +73,33 @@ const Home = () => {
     "+ Critic Favorite Games"
   );
   const [newButtonText, setNewButtonText] = useState("+ Newly Added Games");
-  //Filter Buttons
+  //Filter Buttons for Popular Section
   const [popularFilter, setPopularFilter] = useState([
     { name: "p1Y", isSelected: "selected" },
     { name: "p2Y", isSelected: "unselected" },
     { name: "p3Y", isSelected: "unselected" },
     { name: "p5Y", isSelected: "unselected" },
   ]);
-
-  const getLocalGameData = () => {
-    if (localStorage.getItem("popular") === null) {
-      localStorage.setItem("popular", JSON.stringify([]));
-      localStorage.setItem("new", JSON.stringify([]));
-      localStorage.setItem("upcoming", JSON.stringify([]));
-      localStorage.setItem("highest_rated", JSON.stringify([]));
-      localStorage.setItem("highest_metacritic", JSON.stringify([]));
-    } else {
-      dispatch(loadFromLocal());
-    }
-  };
+  //Filter Buttons for Fan Rated Section
+  const [fanFilter, setFanFilter] = useState([
+    { name: "f1Y", isSelected: "selected" },
+    { name: "f2Y", isSelected: "unselected" },
+    { name: "f3Y", isSelected: "unselected" },
+    { name: "f5Y", isSelected: "unselected" },
+  ]);
+  //Filter Buttons for Metacritic Section
+  const [criticFilter, setCriticFilter] = useState([
+    { name: "c1Y", isSelected: "selected" },
+    { name: "c2Y", isSelected: "unselected" },
+    { name: "c3Y", isSelected: "unselected" },
+    { name: "c5Y", isSelected: "unselected" },
+  ]);
+  //Scroll Animation Set-up for Line
+  const [element, controls] = useScroll();
+  const [element2, controls2] = useScroll();
+  const [element3, controls3] = useScroll();
+  const [element4, controls4] = useScroll();
+  const [element5, controls5] = useScroll();
 
   const compareSession = () => {
     //If user has yet to visit this site today, send API request. Else use Local Storage.
@@ -116,23 +131,45 @@ const Home = () => {
     }
   };
 
-  //Scroll Animation Set-up for Line
-  const [element, controls] = useScroll();
-  const [element2, controls2] = useScroll();
-  const [element3, controls3] = useScroll();
-  const [element4, controls4] = useScroll();
-  const [element5, controls5] = useScroll();
+  //Returns State of Filter Buttons based on Category being Toggled
+  const correctFilterButtons = (filter_category) => {
+    switch (filter_category) {
+      case "p":
+        return [popularFilter, setPopularFilter, "popular"];
+      case "f":
+        return [fanFilter, setFanFilter, "highest_rated"];
+      case "c":
+        return [criticFilter, setCriticFilter, "highest_metacritic"];
+      default:
+        return [
+          [],
+          function () {
+            return undefined;
+          },
+          "",
+        ];
+    }
+  };
 
+  //Updates Filter Button highlight to the one clicked, and dispatches fetch request for Games matching filter
   const updateSelectedHandler = (selected) => {
     let updatedButtons = [];
-    popularFilter.map((button) => {
+    const [copyFilter, setCopyFilter, category] = correctFilterButtons(
+      selected[0]
+    );
+    const year_count = selected[1];
+    console.log(selected);
+    console.log(parseInt(selected[1]));
+    copyFilter.map((button) => {
       if (selected === button.name) {
         updatedButtons.push({ name: button.name, isSelected: "selected" });
       } else {
         updatedButtons.push({ name: button.name, isSelected: "unselected" });
       }
+      return button;
     });
-    setPopularFilter(updatedButtons);
+    setCopyFilter(updatedButtons);
+    dispatch(loadFilteredGames(category, year_count));
   };
 
   return (
@@ -164,6 +201,7 @@ const Home = () => {
           ) : (
             ""
           )}
+
           <h2 id="upcoming">Upcoming Games</h2>
           <motion.div
             variants={lineAnim}
@@ -194,32 +232,45 @@ const Home = () => {
               {upcomingButtonText}
             </button>
           </Button>
+
           <Header>
             <h2 id="popular">Popular Games</h2>
             <div className="filter">
               <button
-                onClick={() => updateSelectedHandler("p1Y")}
+                onClick={() => {
+                  updateSelectedHandler("p1Y");
+                  document.getElementById("popular").scrollIntoView();
+                }}
                 id="p1Y"
                 className={popularFilter[0].isSelected}
               >
                 1Y
               </button>
               <button
-                onClick={() => updateSelectedHandler("p2Y")}
+                onClick={() => {
+                  updateSelectedHandler("p2Y");
+                  document.getElementById("popular").scrollIntoView();
+                }}
                 id="p2Y"
                 className={popularFilter[1].isSelected}
               >
                 2Y
               </button>
               <button
-                onClick={() => updateSelectedHandler("p3Y")}
+                onClick={() => {
+                  updateSelectedHandler("p3Y");
+                  document.getElementById("popular").scrollIntoView();
+                }}
                 id="p3Y"
                 className={popularFilter[2].isSelected}
               >
                 3Y
               </button>
               <button
-                onClick={() => updateSelectedHandler("p5Y")}
+                onClick={() => {
+                  updateSelectedHandler("p5Y");
+                  document.getElementById("popular").scrollIntoView();
+                }}
                 id="p5Y"
                 className={popularFilter[3].isSelected}
               >
@@ -239,6 +290,7 @@ const Home = () => {
               <Game game={game} key={game.id} />
             ))}
           </Games>
+          {/* <GamesDiff></GamesDiff> */}
           <Button>
             <button
               onClick={() => {
@@ -255,7 +307,52 @@ const Home = () => {
               {popularButtonText}
             </button>
           </Button>
-          <h2 id="favorite">Fan Favorite Games</h2>
+
+          <Header>
+            <h2 id="favorite">Fan Favorite Games</h2>
+            <div className="filter">
+              <button
+                onClick={() => {
+                  updateSelectedHandler("f1Y");
+                  document.getElementById("favorite").scrollIntoView();
+                }}
+                id="f1Y"
+                className={fanFilter[0].isSelected}
+              >
+                1Y
+              </button>
+              <button
+                onClick={() => {
+                  updateSelectedHandler("f2Y");
+                  document.getElementById("favorite").scrollIntoView();
+                }}
+                id="f2Y"
+                className={fanFilter[1].isSelected}
+              >
+                2Y
+              </button>
+              <button
+                onClick={() => {
+                  updateSelectedHandler("f3Y");
+                  document.getElementById("favorite").scrollIntoView();
+                }}
+                id="f3Y"
+                className={fanFilter[2].isSelected}
+              >
+                3Y
+              </button>
+              <button
+                onClick={() => {
+                  updateSelectedHandler("f5Y");
+                  document.getElementById("favorite").scrollIntoView();
+                }}
+                id="f5Y"
+                className={fanFilter[3].isSelected}
+              >
+                5Y
+              </button>
+            </div>
+          </Header>
           <motion.div
             variants={lineAnim}
             ref={element3}
@@ -267,7 +364,7 @@ const Home = () => {
             {highest_rated
               .slice(0, numberOfFavoriteGames)
               .map((game) =>
-                game.reviews_count > 10 ? (
+                game.reviews_count > 15 ? (
                   <Game game={game} key={game.id} />
                 ) : (
                   ""
@@ -290,7 +387,51 @@ const Home = () => {
               {favoriteButtonText}
             </button>
           </Button>
-          <h2 id="critic">Critic Favorite Games</h2>
+          <Header>
+            <h2 id="critic">Critic Favorite Games</h2>
+            <div className="filter">
+              <button
+                onClick={() => {
+                  updateSelectedHandler("c1Y");
+                  document.getElementById("critic").scrollIntoView();
+                }}
+                id="c1Y"
+                className={criticFilter[0].isSelected}
+              >
+                1Y
+              </button>
+              <button
+                onClick={() => {
+                  updateSelectedHandler("c2Y");
+                  document.getElementById("critic").scrollIntoView();
+                }}
+                id="c2Y"
+                className={criticFilter[1].isSelected}
+              >
+                2Y
+              </button>
+              <button
+                onClick={() => {
+                  updateSelectedHandler("c3Y");
+                  document.getElementById("critic").scrollIntoView();
+                }}
+                id="c3Y"
+                className={criticFilter[2].isSelected}
+              >
+                3Y
+              </button>
+              <button
+                onClick={() => {
+                  updateSelectedHandler("c5Y");
+                  document.getElementById("critic").scrollIntoView();
+                }}
+                id="c5Y"
+                className={criticFilter[3].isSelected}
+              >
+                5Y
+              </button>
+            </div>
+          </Header>
           <motion.div
             variants={lineAnim}
             ref={element4}
