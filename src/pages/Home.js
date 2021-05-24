@@ -14,7 +14,8 @@ import GameDetail from "../components/GameDetail";
 import styled from "styled-components";
 import { motion, AnimatePresence, AnimateSharedLayout } from "framer-motion";
 import { useScroll } from "../components/useScroll";
-import { lineAnim } from "../animations";
+import { useScrollHeader } from "../components/useScrollHeader";
+import { lineAnim, opacityOnOff } from "../animations";
 //Routing
 import { useLocation } from "react-router-dom";
 
@@ -101,6 +102,13 @@ const Home = () => {
   const [element4, controls4] = useScroll();
   const [element5, controls5] = useScroll();
 
+  //Scroll Animation Set-up for Header
+  const [elementHeader0, controlsHeader0] = useScrollHeader();
+  const [elementHeader1, controlsHeader1] = useScrollHeader();
+  const [elementHeader2, controlsHeader2] = useScrollHeader();
+  const [elementHeader3, controlsHeader3] = useScrollHeader();
+  const [elementHeader4, controlsHeader4] = useScrollHeader();
+
   const compareSession = () => {
     //If user has yet to visit this site today, send API request. Else use Local Storage.
     let date = new Date();
@@ -185,14 +193,22 @@ const Home = () => {
           {searched.length ? (
             // truthy vs falsey values, searched is initially empty array (=== true), searched.length when empty is 0 (===false)
             <div className="searched">
-              <h2>Searched Games</h2>
-              <motion.div
-                variants={lineAnim}
-                initial="hidden"
-                animate="show"
-                className="line"
-              ></motion.div>
-              <Games>
+              <StickyTop
+                variants={opacityOnOff}
+                initial="show"
+                animate={controlsHeader0}
+              >
+                <Header>
+                  <h2>Searched Games</h2>
+                </Header>
+                <motion.div
+                  variants={lineAnim}
+                  initial="hidden"
+                  animate="show"
+                  className="line"
+                ></motion.div>
+              </StickyTop>
+              <Games ref={elementHeader0}>
                 {searched.map((game) =>
                   game.rating !== 0 ? <Game game={game} key={game.id} /> : ""
                 )}
@@ -201,16 +217,25 @@ const Home = () => {
           ) : (
             ""
           )}
-
-          <h2 id="upcoming">Upcoming Games</h2>
-          <motion.div
-            variants={lineAnim}
-            ref={element}
-            initial="hidden"
-            animate={controls}
-            className="line"
-          ></motion.div>
-          <Games id="upcoming_container">
+          {/* -------------------------------------------------------------------------------------------------------------------------------------- */}
+          <div id="upcoming" className="start_of_category"></div>
+          <StickyTop
+            variants={opacityOnOff}
+            initial="show"
+            animate={controlsHeader1}
+          >
+            <Header>
+              <h2>Upcoming Games</h2>
+            </Header>
+            <motion.div
+              variants={lineAnim}
+              ref={element}
+              initial="hidden"
+              animate={controls}
+              className="line"
+            ></motion.div>
+          </StickyTop>
+          <Games ref={elementHeader1} id="upcoming_container">
             {upcoming.slice(0, numberOfUpcomingGames).map((game) => (
               <Game game={game} key={game.id} />
             ))}
@@ -232,60 +257,67 @@ const Home = () => {
               {upcomingButtonText}
             </button>
           </Button>
-
-          <Header>
-            <h2 id="popular">Popular Games</h2>
-            <div className="filter">
-              <button
-                onClick={() => {
-                  updateSelectedHandler("p1Y");
-                  document.getElementById("popular").scrollIntoView();
-                }}
-                id="p1Y"
-                className={popularFilter[0].isSelected}
-              >
-                1Y
-              </button>
-              <button
-                onClick={() => {
-                  updateSelectedHandler("p2Y");
-                  document.getElementById("popular").scrollIntoView();
-                }}
-                id="p2Y"
-                className={popularFilter[1].isSelected}
-              >
-                2Y
-              </button>
-              <button
-                onClick={() => {
-                  updateSelectedHandler("p3Y");
-                  document.getElementById("popular").scrollIntoView();
-                }}
-                id="p3Y"
-                className={popularFilter[2].isSelected}
-              >
-                3Y
-              </button>
-              <button
-                onClick={() => {
-                  updateSelectedHandler("p5Y");
-                  document.getElementById("popular").scrollIntoView();
-                }}
-                id="p5Y"
-                className={popularFilter[3].isSelected}
-              >
-                5Y
-              </button>
-            </div>
-          </Header>
-          <motion.div
-            variants={lineAnim}
-            ref={element2}
-            initial="hidden"
-            animate={controls2}
-            className="line"
-          ></motion.div>
-          <Games>
+          {/* -------------------------------------------------------------------------------------------------------------------------------------- */}
+          <div id="popular" className="start_of_category"></div>
+          <StickyTop
+            variants={opacityOnOff}
+            initial="show"
+            animate={controlsHeader2}
+          >
+            <Header>
+              <h2>Popular Games</h2>
+              <div className="filter">
+                <button
+                  onClick={() => {
+                    updateSelectedHandler("p1Y");
+                    document.getElementById("popular").scrollIntoView();
+                  }}
+                  id="p1Y"
+                  className={popularFilter[0].isSelected}
+                >
+                  1Y
+                </button>
+                <button
+                  onClick={() => {
+                    updateSelectedHandler("p2Y");
+                    document.getElementById("popular").scrollIntoView();
+                  }}
+                  id="p2Y"
+                  className={popularFilter[1].isSelected}
+                >
+                  2Y
+                </button>
+                <button
+                  onClick={() => {
+                    updateSelectedHandler("p3Y");
+                    document.getElementById("popular").scrollIntoView();
+                  }}
+                  id="p3Y"
+                  className={popularFilter[2].isSelected}
+                >
+                  3Y
+                </button>
+                <button
+                  onClick={() => {
+                    updateSelectedHandler("p5Y");
+                    document.getElementById("popular").scrollIntoView();
+                  }}
+                  id="p5Y"
+                  className={popularFilter[3].isSelected}
+                >
+                  5Y
+                </button>
+              </div>
+            </Header>
+            <motion.div
+              variants={lineAnim}
+              ref={element2}
+              initial="hidden"
+              animate={controls2}
+              className="line"
+            ></motion.div>
+          </StickyTop>
+          <Games ref={elementHeader2}>
             {popular.slice(0, numberOfPopularGames).map((game) => (
               <Game game={game} key={game.id} />
             ))}
@@ -307,60 +339,67 @@ const Home = () => {
               {popularButtonText}
             </button>
           </Button>
-
-          <Header>
-            <h2 id="favorite">Fan Favorite Games</h2>
-            <div className="filter">
-              <button
-                onClick={() => {
-                  updateSelectedHandler("f1Y");
-                  document.getElementById("favorite").scrollIntoView();
-                }}
-                id="f1Y"
-                className={fanFilter[0].isSelected}
-              >
-                1Y
-              </button>
-              <button
-                onClick={() => {
-                  updateSelectedHandler("f2Y");
-                  document.getElementById("favorite").scrollIntoView();
-                }}
-                id="f2Y"
-                className={fanFilter[1].isSelected}
-              >
-                2Y
-              </button>
-              <button
-                onClick={() => {
-                  updateSelectedHandler("f3Y");
-                  document.getElementById("favorite").scrollIntoView();
-                }}
-                id="f3Y"
-                className={fanFilter[2].isSelected}
-              >
-                3Y
-              </button>
-              <button
-                onClick={() => {
-                  updateSelectedHandler("f5Y");
-                  document.getElementById("favorite").scrollIntoView();
-                }}
-                id="f5Y"
-                className={fanFilter[3].isSelected}
-              >
-                5Y
-              </button>
-            </div>
-          </Header>
-          <motion.div
-            variants={lineAnim}
-            ref={element3}
-            initial="hidden"
-            animate={controls3}
-            className="line"
-          ></motion.div>
-          <Games>
+          {/* -------------------------------------------------------------------------------------------------------------------------------------- */}
+          <div id="favorite" className="start_of_category"></div>
+          <StickyTop
+            variants={opacityOnOff}
+            initial="show"
+            animate={controlsHeader3}
+          >
+            <Header>
+              <h2>Fan Favorite Games</h2>
+              <div className="filter">
+                <button
+                  onClick={() => {
+                    updateSelectedHandler("f1Y");
+                    document.getElementById("favorite").scrollIntoView();
+                  }}
+                  id="f1Y"
+                  className={fanFilter[0].isSelected}
+                >
+                  1Y
+                </button>
+                <button
+                  onClick={() => {
+                    updateSelectedHandler("f2Y");
+                    document.getElementById("favorite").scrollIntoView();
+                  }}
+                  id="f2Y"
+                  className={fanFilter[1].isSelected}
+                >
+                  2Y
+                </button>
+                <button
+                  onClick={() => {
+                    updateSelectedHandler("f3Y");
+                    document.getElementById("favorite").scrollIntoView();
+                  }}
+                  id="f3Y"
+                  className={fanFilter[2].isSelected}
+                >
+                  3Y
+                </button>
+                <button
+                  onClick={() => {
+                    updateSelectedHandler("f5Y");
+                    document.getElementById("favorite").scrollIntoView();
+                  }}
+                  id="f5Y"
+                  className={fanFilter[3].isSelected}
+                >
+                  5Y
+                </button>
+              </div>
+            </Header>
+            <motion.div
+              variants={lineAnim}
+              ref={element3}
+              initial="hidden"
+              animate={controls3}
+              className="line"
+            ></motion.div>
+          </StickyTop>
+          <Games ref={elementHeader3}>
             {highest_rated
               .slice(0, numberOfFavoriteGames)
               .map((game) =>
@@ -387,59 +426,67 @@ const Home = () => {
               {favoriteButtonText}
             </button>
           </Button>
-          <Header>
-            <h2 id="critic">Critic Favorite Games</h2>
-            <div className="filter">
-              <button
-                onClick={() => {
-                  updateSelectedHandler("c1Y");
-                  document.getElementById("critic").scrollIntoView();
-                }}
-                id="c1Y"
-                className={criticFilter[0].isSelected}
-              >
-                1Y
-              </button>
-              <button
-                onClick={() => {
-                  updateSelectedHandler("c2Y");
-                  document.getElementById("critic").scrollIntoView();
-                }}
-                id="c2Y"
-                className={criticFilter[1].isSelected}
-              >
-                2Y
-              </button>
-              <button
-                onClick={() => {
-                  updateSelectedHandler("c3Y");
-                  document.getElementById("critic").scrollIntoView();
-                }}
-                id="c3Y"
-                className={criticFilter[2].isSelected}
-              >
-                3Y
-              </button>
-              <button
-                onClick={() => {
-                  updateSelectedHandler("c5Y");
-                  document.getElementById("critic").scrollIntoView();
-                }}
-                id="c5Y"
-                className={criticFilter[3].isSelected}
-              >
-                5Y
-              </button>
-            </div>
-          </Header>
-          <motion.div
-            variants={lineAnim}
-            ref={element4}
-            initial="hidden"
-            animate={controls4}
-            className="line"
-          ></motion.div>
-          <Games>
+          {/* -------------------------------------------------------------------------------------------------------------------------------------- */}
+          <div id="critic" className="start_of_category"></div>
+          <StickyTop
+            variants={opacityOnOff}
+            initial="show"
+            animate={controlsHeader4}
+          >
+            <Header>
+              <h2>Critic Favorite Games</h2>
+              <div className="filter">
+                <button
+                  onClick={() => {
+                    updateSelectedHandler("c1Y");
+                    document.getElementById("critic").scrollIntoView();
+                  }}
+                  id="c1Y"
+                  className={criticFilter[0].isSelected}
+                >
+                  1Y
+                </button>
+                <button
+                  onClick={() => {
+                    updateSelectedHandler("c2Y");
+                    document.getElementById("critic").scrollIntoView();
+                  }}
+                  id="c2Y"
+                  className={criticFilter[1].isSelected}
+                >
+                  2Y
+                </button>
+                <button
+                  onClick={() => {
+                    updateSelectedHandler("c3Y");
+                    document.getElementById("critic").scrollIntoView();
+                  }}
+                  id="c3Y"
+                  className={criticFilter[2].isSelected}
+                >
+                  3Y
+                </button>
+                <button
+                  onClick={() => {
+                    updateSelectedHandler("c5Y");
+                    document.getElementById("critic").scrollIntoView();
+                  }}
+                  id="c5Y"
+                  className={criticFilter[3].isSelected}
+                >
+                  5Y
+                </button>
+              </div>
+            </Header>
+            <motion.div
+              variants={lineAnim}
+              ref={element4}
+              initial="hidden"
+              animate={controls4}
+              className="line"
+            ></motion.div>
+          </StickyTop>
+          <Games ref={elementHeader4}>
             {highest_metacritic.slice(0, numberOfCriticGames).map((game) => (
               <Game game={game} key={game.id} />
             ))}
@@ -460,14 +507,20 @@ const Home = () => {
               {criticButtonText}
             </button>
           </Button>
-          <h2 id="new">Newly Added Games</h2>
-          <motion.div
-            variants={lineAnim}
-            ref={element5}
-            initial="hidden"
-            animate={controls5}
-            className="line"
-          ></motion.div>
+          {/* -------------------------------------------------------------------------------------------------------------------------------------- */}
+          <div id="new" className="start_of_category"></div>
+          <StickyTop>
+            <Header>
+              <h2 id="new">Newly Added Games</h2>
+            </Header>
+            <motion.div
+              variants={lineAnim}
+              ref={element5}
+              initial="hidden"
+              animate={controls5}
+              className="line"
+            ></motion.div>
+          </StickyTop>
           <Games>
             {recent.slice(0, numberOfNewGames).map((game) => (
               <Game game={game} key={game.id} />
@@ -505,6 +558,9 @@ const GameList = styled(motion.div)`
     height: 0.25rem;
     background: #ff7676;
     margin-bottom: 3rem;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 5rem;
   }
 `;
 
@@ -548,12 +604,17 @@ const Games = styled(motion.div)`
   }
 `;
 
+const StickyTop = styled(motion.div)`
+  position: -webkit-sticky;
+  position: sticky;
+  top: -5rem;
+`;
+
 const Header = styled(motion.div)`
-  /* background: pink; */
+  background: rgba(255, 255, 255, 0.5);
   display: flex;
   justify-content: space-between;
   h2 {
-    /* background: blue; */
     padding: 5rem 0rem 1rem 0rem;
   }
   .filter {
