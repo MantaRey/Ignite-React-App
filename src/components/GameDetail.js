@@ -14,8 +14,11 @@ import nintendo from "../img/nintendo.svg";
 import apple from "../img/apple.svg";
 import gamepad from "../img/gamepad.svg";
 //Star Images
-import starEmpty from "../img/star_empty.png";
-import starFull from "../img/star_full.png";
+import starEmpty from "../img/star_empty.svg";
+import starQuarter from "../img/star_quarter.svg";
+import starHalf from "../img/star_half.svg";
+import starThreeQuarter from "../img/star_three_quarter.svg";
+import starFull from "../img/star_full.svg";
 
 const GameDetail = ({ pathId }) => {
   //Current URL info
@@ -39,10 +42,18 @@ const GameDetail = ({ pathId }) => {
   //Get Rating Stars
   const getStars = () => {
     const stars = [];
-    const rating = Math.floor(game.rating);
+    // const rating = Math.floor(game.rating);
+    let rating = game.rating;
     for (let i = 1; i <= 5; i++) {
-      if (i <= rating) {
+      rating = rating - 1;
+      if (rating > 0) {
         stars.push(<img alt="star" key={i} src={starFull}></img>);
+      } else if (rating >= -0.25) {
+        stars.push(<img alt="star" key={i} src={starThreeQuarter}></img>);
+      } else if (rating >= -0.5) {
+        stars.push(<img alt="star" key={i} src={starHalf}></img>);
+      } else if (rating >= -0.75) {
+        stars.push(<img alt="star" key={i} src={starQuarter}></img>);
       } else {
         stars.push(<img alt="star" key={i} src={starEmpty}></img>);
       }

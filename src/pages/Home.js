@@ -629,15 +629,18 @@ const Header = styled(motion.div)`
       cursor: pointer;
       color: #ff7676;
       background: white;
+      opacity: 0.8;
       &:hover {
         background: #ff7676;
         color: white;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        opacity: 0.8;
+        /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); */
       }
     }
     .selected {
       background: #ff7676;
       color: white;
+      opacity: 1;
       box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
     }
   }

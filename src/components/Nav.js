@@ -8,6 +8,7 @@ import { fetchSearch, clearSearched } from "../actions/gamesAction";
 import { useDispatch } from "react-redux";
 //Logo
 import logo from "../img/logo.svg";
+import logo_lit from "../img/logo_lit.svg";
 
 const Nav = () => {
   const dispatch = useDispatch();
@@ -19,15 +20,26 @@ const Nav = () => {
   const submitSearch = (e) => {
     e.preventDefault();
     dispatch(fetchSearch(textInput));
-    setTextInput("");
+    // setTextInput("");
   };
   const clearSearchResults = () => {
+    setTextInput("");
     dispatch(clearSearched());
+  };
+  const hover = (e) => {
+    document.getElementById("logo").setAttribute("src", logo_lit);
+  };
+  const unhover = (e) => {
+    document.getElementById("logo").setAttribute("src", logo);
   };
   return (
     <StyledNav variants={popUp_fadeIn} initial="hidden" animate="show">
-      <Logo onClick={clearSearchResults}>
-        <img src={logo} alt="logo" />
+      <Logo
+        onMouseOver={hover}
+        onMouseLeave={unhover}
+        onClick={clearSearchResults}
+      >
+        <img id="logo" src={logo} alt="website logo" />
         <h1>Ignite</h1>
       </Logo>
       <form onSubmit={submitSearch} className="search">
