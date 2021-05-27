@@ -53,6 +53,9 @@ const Nav = () => {
 const StyledNav = styled(motion.nav)`
   padding: 3rem 5rem;
   text-align: center;
+  @media (max-width: 1536px) {
+    padding: 2rem 5rem;
+  }
   input {
     width: 30%;
     min-height: 4vh;
@@ -62,6 +65,14 @@ const StyledNav = styled(motion.nav)`
     margin-top: 1rem;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
     outline: none;
+    @media (max-width: 1536px) {
+      width: 40%;
+      font-size: 1.2rem;
+    }
+    @media (max-width: 768px) {
+      width: 50%;
+      font-size: 1rem;
+    }
     &:focus {
       box-shadow: 0px 0px 10px #ff7676;
     }
@@ -76,6 +87,12 @@ const StyledNav = styled(motion.nav)`
     background: #ff7676;
     color: white;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    @media (max-width: 1536px) {
+      font-size: 1.2rem;
+    }
+    @media (max-width: 768px) {
+      font-size: 1rem;
+    }
   }
 `;
 
@@ -87,6 +104,10 @@ const Logo = styled(motion.div)`
   img {
     width: 2rem;
     height: 2rem;
+    @media (max-width: 1536px) {
+      width: 2rem;
+      height: 2rem;
+    }
   }
   &:hover {
     color: #ff7676;

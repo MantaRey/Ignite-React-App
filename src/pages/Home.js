@@ -551,8 +551,17 @@ const Home = () => {
 
 const GameList = styled(motion.div)`
   padding: 0rem 5rem;
+  @media (max-width: 1536px) {
+    padding: 0rem 5rem;
+  }
+  @media (max-width: 1024px) {
+    padding: 0rem 2.5rem;
+  }
   h2 {
     padding: 5rem 0rem 1rem 0rem;
+    @media (max-width: 1536px) {
+      padding: 4rem 0rem 1rem 0rem;
+    }
   }
   .line {
     height: 0.25rem;
@@ -560,7 +569,104 @@ const GameList = styled(motion.div)`
     margin-bottom: 3rem;
     position: -webkit-sticky;
     position: sticky;
-    top: 5rem;
+    /* top: 5rem; */ //Do not need this anymore because StickyTop
+  }
+`;
+
+const StickyTop = styled(motion.div)`
+  position: -webkit-sticky;
+  position: sticky;
+  top: -5rem;
+  @media (max-width: 1536px) {
+    top: -4rem;
+  }
+  @media (max-width: 768px) {
+    top: -2rem;
+  }
+`;
+
+const Header = styled(motion.div)`
+  background: rgba(255, 255, 255, 0.5);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  h2 {
+    padding: 5rem 0rem 1rem 0rem;
+    @media (max-width: 1536px) {
+      padding: 4rem 0rem 1rem 0rem;
+    }
+    @media (max-width: 768px) {
+      padding: 2rem 0rem 1rem 0rem;
+    }
+  }
+  .filter {
+    /* background: red; */
+    padding: 5rem 0rem 1rem 0rem;
+    @media (max-width: 1536px) {
+      padding: 4rem 0rem 1rem 0rem;
+    }
+    @media (max-width: 768px) {
+      padding: 2rem 0rem 1rem 0rem;
+    }
+    .selected {
+      background: #ff7676;
+      color: white;
+      opacity: 1;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    }
+    button {
+      min-height: 4vh;
+      font-size: 1.5rem;
+      margin-top: 1rem;
+      border: none;
+      padding: 0.5rem 2rem;
+      cursor: pointer;
+      color: #ff7676;
+      background: white;
+      opacity: 0.8;
+      @media (max-width: 1536px) {
+        font-size: 1.2rem;
+      }
+      @media (max-width: 768px) {
+        font-size: 1rem;
+        padding: 0.5rem 1rem;
+      }
+      &:hover {
+        background: #ff7676;
+        color: white;
+        opacity: 0.8;
+      }
+    }
+  }
+`;
+
+const Games = styled(motion.div)`
+  min-height: 40vh;
+  /* min-height: 80vh; */ //Changed becuz Search Results less than intended where formatted oddly
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(475px, 1fr));
+  // ^^^ Changed from 500px
+  grid-column-gap: 3rem;
+  grid-row-gap: 5rem;
+  @media (max-width: 1536px) {
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    grid-column-gap: 2.5rem;
+    grid-row-gap: 4rem;
+  }
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    grid-column-gap: 2rem;
+    grid-row-gap: 3rem;
+  }
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-column-gap: 1.5rem;
+    grid-row-gap: 2rem;
+  }
+  @media (max-width: 425px) {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-column-gap: 1rem;
+    grid-row-gap: 1.25rem;
   }
 `;
 
@@ -568,6 +674,12 @@ const Button = styled(motion.div)`
   display: flex;
   justify-content: flex-end;
   padding: 2rem 0rem;
+  @media (max-width: 1536px) {
+    padding: 2rem 0rem;
+  }
+  @media (max-width: 768px) {
+    padding: 1rem 0rem;
+  }
   button {
     min-height: 4vh;
     font-size: 1.5rem;
@@ -582,66 +694,12 @@ const Button = styled(motion.div)`
       color: white;
       box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
     }
-  }
-`;
-
-const Games = styled(motion.div)`
-  min-height: 40vh;
-  /* min-height: 80vh; */ //Changed becuz Search Results less than intended where formatted oddly
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-  grid-column-gap: 3rem;
-  grid-row-gap: 5rem;
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(auto-fit, minmax(275px, 1fr));
-    grid-column-gap: 1.5rem;
-    grid-row-gap: 2.5rem;
-  }
-  @media (max-width: 425px) {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    grid-column-gap: 1rem;
-    grid-row-gap: 1.25rem;
-  }
-`;
-
-const StickyTop = styled(motion.div)`
-  position: -webkit-sticky;
-  position: sticky;
-  top: -5rem;
-`;
-
-const Header = styled(motion.div)`
-  background: rgba(255, 255, 255, 0.5);
-  display: flex;
-  justify-content: space-between;
-  h2 {
-    padding: 5rem 0rem 1rem 0rem;
-  }
-  .filter {
-    /* background: red; */
-    padding: 5rem 0rem 1rem 0rem;
-    button {
-      min-height: 4vh;
+    @media (max-width: 1536px) {
       font-size: 1.5rem;
-      margin-top: 1rem;
-      border: none;
-      padding: 0.5rem 2rem;
-      cursor: pointer;
-      color: #ff7676;
-      background: white;
-      opacity: 0.8;
-      &:hover {
-        background: #ff7676;
-        color: white;
-        opacity: 0.8;
-        /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); */
-      }
     }
-    .selected {
-      background: #ff7676;
-      color: white;
-      opacity: 1;
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    @media (max-width: 768px) {
+      font-size: 1.2rem;
+      padding: 0.5rem 1rem;
     }
   }
 `;

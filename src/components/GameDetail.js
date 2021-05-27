@@ -46,7 +46,7 @@ const GameDetail = ({ pathId }) => {
     let rating = game.rating;
     for (let i = 1; i <= 5; i++) {
       rating = rating - 1;
-      if (rating > 0) {
+      if (rating >= 0) {
         stars.push(<img alt="star" key={i} src={starFull}></img>);
       } else if (rating >= -0.25) {
         stars.push(<img alt="star" key={i} src={starThreeQuarter}></img>);
