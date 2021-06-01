@@ -169,7 +169,7 @@ const Home = () => {
     console.log(selected);
     console.log(parseInt(selected[1]));
     copyFilter.map((button) => {
-      if (selected === button.name) {
+      if (parseInt(selected[1]) >= parseInt(button.name[1])) {
         updatedButtons.push({ name: button.name, isSelected: "selected" });
       } else {
         updatedButtons.push({ name: button.name, isSelected: "unselected" });
@@ -612,7 +612,7 @@ const Header = styled(motion.div)`
       background: #ff7676;
       color: white;
       opacity: 1;
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); */
     }
     button {
       min-height: 4vh;
