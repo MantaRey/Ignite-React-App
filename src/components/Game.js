@@ -72,8 +72,14 @@ const StyledGame = styled(motion.div)`
   @media (max-width: 1536px) {
     min-height: 30vh;
   }
-  @media (max-width: 1536px) {
-    min-height: 30vh;
+  /* @media (max-width: 768px) {
+    min-height: 25vh;
+  } */
+  @media (max-width: 426px) {
+    min-height: 20vh;
+  }
+  @media (max-width: 321px) {
+    min-height: 10vh;
   }
   img {
     width: 100%;
@@ -83,9 +89,17 @@ const StyledGame = styled(motion.div)`
       width: 100%;
       height: 40vh;
     }
-    @media (max-width: 1536px) {
+    /* @media (max-width: 768px) {
       width: 100%;
-      height: 40vh;
+      height: 35vh;
+    } */
+    @media (max-width: 426px) {
+      width: 100%;
+      height: 30vh;
+    }
+    @media (max-width: 321px) {
+      width: 100%;
+      height: 20vh;
     }
   }
 `;

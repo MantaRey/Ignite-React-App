@@ -16,6 +16,7 @@ import { motion, AnimatePresence, AnimateSharedLayout } from "framer-motion";
 import { useScroll } from "../components/useScroll";
 import { useScrollHeader } from "../components/useScrollHeader";
 import { lineAnim, opacityOnOff } from "../animations";
+import calendar from "../img/calendar.svg";
 //Routing
 import { useLocation } from "react-router-dom";
 
@@ -104,10 +105,10 @@ const Home = () => {
 
   //Scroll Animation Set-up for Header
   const [elementHeader0, controlsHeader0] = useScrollHeader();
-  const [elementHeader1, controlsHeader1] = useScrollHeader();
-  const [elementHeader2, controlsHeader2] = useScrollHeader();
-  const [elementHeader3, controlsHeader3] = useScrollHeader();
-  const [elementHeader4, controlsHeader4] = useScrollHeader();
+  const [elementHeader1, controlsHeader1] = useScrollHeader("upcoming_header");
+  const [elementHeader2, controlsHeader2] = useScrollHeader("popular_header");
+  const [elementHeader3, controlsHeader3] = useScrollHeader("favorite_header");
+  const [elementHeader4, controlsHeader4] = useScrollHeader("critic_header");
 
   const compareSession = () => {
     //If user has yet to visit this site today, send API request. Else use Local Storage.
@@ -220,6 +221,7 @@ const Home = () => {
           {/* -------------------------------------------------------------------------------------------------------------------------------------- */}
           <div id="upcoming" className="start_of_category"></div>
           <StickyTop
+            id="upcoming_header"
             variants={opacityOnOff}
             initial="show"
             animate={controlsHeader1}
@@ -260,6 +262,7 @@ const Home = () => {
           {/* -------------------------------------------------------------------------------------------------------------------------------------- */}
           <div id="popular" className="start_of_category"></div>
           <StickyTop
+            id="popular_header"
             variants={opacityOnOff}
             initial="show"
             animate={controlsHeader2}
@@ -307,6 +310,9 @@ const Home = () => {
                 >
                   5Y
                 </button>
+                <div className="icon">
+                  <img src={calendar} alt="calendar" />
+                </div>
               </div>
             </Header>
             <motion.div
@@ -342,6 +348,7 @@ const Home = () => {
           {/* -------------------------------------------------------------------------------------------------------------------------------------- */}
           <div id="favorite" className="start_of_category"></div>
           <StickyTop
+            id="favorite_header"
             variants={opacityOnOff}
             initial="show"
             animate={controlsHeader3}
@@ -389,6 +396,9 @@ const Home = () => {
                 >
                   5Y
                 </button>
+                <div className="icon">
+                  <img src={calendar} alt="calendar" />
+                </div>
               </div>
             </Header>
             <motion.div
@@ -429,6 +439,7 @@ const Home = () => {
           {/* -------------------------------------------------------------------------------------------------------------------------------------- */}
           <div id="critic" className="start_of_category"></div>
           <StickyTop
+            id="critic_header"
             variants={opacityOnOff}
             initial="show"
             animate={controlsHeader4}
@@ -476,6 +487,9 @@ const Home = () => {
                 >
                   5Y
                 </button>
+                <div className="icon">
+                  <img src={calendar} alt="calendar" />
+                </div>
               </div>
             </Header>
             <motion.div
@@ -509,7 +523,7 @@ const Home = () => {
           </Button>
           {/* -------------------------------------------------------------------------------------------------------------------------------------- */}
           <div id="new" className="start_of_category"></div>
-          <StickyTop>
+          <StickyTop id="new_header">
             <Header>
               <h2 id="new">Newly Added Games</h2>
             </Header>
@@ -557,11 +571,11 @@ const GameList = styled(motion.div)`
   @media (max-width: 1024px) {
     padding: 0rem 2.5rem;
   }
-  h2 {
-    padding: 5rem 0rem 1rem 0rem;
-    @media (max-width: 1536px) {
-      padding: 4rem 0rem 1rem 0rem;
-    }
+  @media (max-width: 768px) {
+    padding: 0rem 1.5rem;
+  }
+  @media (max-width: 426px) {
+    padding: 0rem 1rem;
   }
   .line {
     height: 0.25rem;
@@ -570,6 +584,13 @@ const GameList = styled(motion.div)`
     position: -webkit-sticky;
     position: sticky;
     /* top: 5rem; */ //Do not need this anymore because StickyTop
+    @media (max-width: 768px) {
+      height: 0.15rem;
+    }
+    @media (max-width: 426px) {
+      height: 0.1rem;
+      margin-bottom: 1.5rem;
+    }
   }
 `;
 
@@ -581,7 +602,10 @@ const StickyTop = styled(motion.div)`
     top: -4rem;
   }
   @media (max-width: 768px) {
-    top: -2rem;
+    top: -3rem;
+  }
+  @media (max-width: 426px) {
+    top: -1.5rem;
   }
 `;
 
@@ -596,23 +620,55 @@ const Header = styled(motion.div)`
       padding: 4rem 0rem 1rem 0rem;
     }
     @media (max-width: 768px) {
-      padding: 2rem 0rem 1rem 0rem;
+      padding: 3rem 0rem 1rem 0rem;
+    }
+    @media (max-width: 426px) {
+      padding: 2rem 0rem 0.5rem 0rem;
     }
   }
   .filter {
     /* background: red; */
+    display: flex;
+    justify-content: space-evenly;
     padding: 5rem 0rem 1rem 0rem;
     @media (max-width: 1536px) {
       padding: 4rem 0rem 1rem 0rem;
     }
     @media (max-width: 768px) {
-      padding: 2rem 0rem 1rem 0rem;
+      padding: 3rem 0rem 1rem 0rem;
+    }
+    @media (max-width: 426px) {
+      padding: 1rem 0rem 0.5rem 0rem;
     }
     .selected {
       background: #ff7676;
       color: white;
       opacity: 1;
       /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); */
+    }
+    .icon {
+      /* background: pink; */
+      display: flex;
+      align-items: center;
+    }
+    img {
+      margin-top: 1rem;
+      margin-left: 1rem;
+      width: fill;
+      height: 3rem;
+      @media (max-width: 1536px) {
+        width: fill;
+        height: 2rem;
+      }
+      @media (max-width: 768px) {
+        width: fill;
+        height: 1.5rem;
+      }
+      @media (max-width: 426px) {
+        width: fill;
+        height: 1rem;
+        margin-left: 0.5rem;
+      }
     }
     button {
       min-height: 4vh;
@@ -625,11 +681,24 @@ const Header = styled(motion.div)`
       background: white;
       opacity: 0.8;
       @media (max-width: 1536px) {
-        font-size: 1.2rem;
+        font-size: 1rem;
+        padding: 0.5rem 2rem;
+      }
+      @media (max-width: 1024px) {
+        font-size: 1rem;
+        padding: 0.5rem 2rem;
       }
       @media (max-width: 768px) {
-        font-size: 1rem;
+        font-size: 0.8rem;
         padding: 0.5rem 1rem;
+      }
+      @media (max-width: 426px) {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.5rem;
+      }
+      @media (max-width: 376px) {
+        font-size: 0.6875rem;
+        padding: 0.25rem 0.5rem;
       }
       &:hover {
         background: #ff7676;
@@ -637,36 +706,6 @@ const Header = styled(motion.div)`
         opacity: 0.8;
       }
     }
-  }
-`;
-
-const Games = styled(motion.div)`
-  min-height: 40vh;
-  /* min-height: 80vh; */ //Changed becuz Search Results less than intended where formatted oddly
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(475px, 1fr));
-  // ^^^ Changed from 500px
-  grid-column-gap: 3rem;
-  grid-row-gap: 5rem;
-  @media (max-width: 1536px) {
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    grid-column-gap: 2.5rem;
-    grid-row-gap: 4rem;
-  }
-  @media (max-width: 1024px) {
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    grid-column-gap: 2rem;
-    grid-row-gap: 3rem;
-  }
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    grid-column-gap: 1.5rem;
-    grid-row-gap: 2rem;
-  }
-  @media (max-width: 425px) {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    grid-column-gap: 1rem;
-    grid-row-gap: 1.25rem;
   }
 `;
 
@@ -678,7 +717,7 @@ const Button = styled(motion.div)`
     padding: 2rem 0rem;
   }
   @media (max-width: 768px) {
-    padding: 1rem 0rem;
+    padding: 1rem 0rem 4rem 0rem;
   }
   button {
     min-height: 4vh;
@@ -695,12 +734,91 @@ const Button = styled(motion.div)`
       box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
     }
     @media (max-width: 1536px) {
-      font-size: 1.5rem;
+      font-size: 1.2rem;
+      padding: 0.5rem 2rem;
+    }
+    @media (max-width: 1024px) {
+      font-size: 1.2rem;
+      padding: 0.5rem 2rem;
     }
     @media (max-width: 768px) {
-      font-size: 1.2rem;
+      font-size: 1rem;
       padding: 0.5rem 1rem;
     }
+    @media (max-width: 426px) {
+      font-size: 0.8rem;
+      padding: 0.25rem 0.5rem;
+    }
+    @media (max-width: 376px) {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.5rem;
+    }
+  }
+`;
+
+const Games = styled(motion.div)`
+  min-height: 40vh;
+  /* min-height: 80vh; */ //Changed becuz Search Results less than intended where formatted oddly
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(475px, 1fr));
+  // ^^^ Changed from 500px
+  grid-column-gap: 3rem;
+  grid-row-gap: 5rem;
+  @media (max-width: 1675px) {
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    grid-column-gap: 2.5rem;
+    grid-row-gap: 4rem;
+  }
+  @media (max-width: 1536px) {
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    grid-column-gap: 2.5rem;
+    grid-row-gap: 4rem;
+  }
+  @media (max-width: 1440px) {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-column-gap: 2.5rem;
+    grid-row-gap: 4rem;
+  }
+  @media (max-width: 1294px) {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-column-gap: 2.5rem;
+    grid-row-gap: 4rem;
+  }
+  @media (max-width: 1140px) {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-column-gap: 2.5rem;
+    grid-row-gap: 4rem;
+  }
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    // used to be 400px for only 2 columns, now is 3 columns like Tablet
+    grid-column-gap: 2rem;
+    grid-row-gap: 3rem;
+  }
+  @media (max-width: 896px) {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-column-gap: 1.5rem;
+    grid-row-gap: 2rem;
+  }
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-column-gap: 1.5rem;
+    grid-row-gap: 2rem;
+  }
+  @media (max-width: 695px) {
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    grid-column-gap: 1.5rem;
+    grid-row-gap: 2rem;
+  }
+  @media (max-width: 478px) {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-column-gap: 1rem;
+    grid-row-gap: 1rem;
+  }
+  @media (max-width: 350px) {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-column-gap: 0.75rem;
+    grid-row-gap: 0.75rem;
   }
 `;
 
