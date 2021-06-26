@@ -192,6 +192,9 @@ const CardShadow = styled(motion.div)`
   z-index: 5;
   &::-webkit-scrollbar {
     width: 0.5rem;
+    @media (max-width: 768px) {
+      width: 0.25rem;
+    }
   }
   &::-webkit-scrollbar-thumb {
     background-color: #ff7676;
@@ -213,6 +216,9 @@ const Detail = styled(motion.div)`
   @media (max-width: 1750px) {
     padding: 1rem 2.5rem 0rem 2.5rem;
   }
+  @media (max-width: 768px) {
+    padding: 1rem 1.5rem 0rem 1.5rem;
+  }
   .rating {
     /* background: cyan; */
   }
@@ -220,6 +226,10 @@ const Detail = styled(motion.div)`
     width: 2rem;
     height: 2rem;
     display: inline;
+    @media (max-width: 768px) {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
   }
   .line {
     /* background-color: purple; */
@@ -227,6 +237,10 @@ const Detail = styled(motion.div)`
     margin: 1rem 0rem 0rem 0rem;
     background: #ff7676;
     color: black;
+    @media (max-width: 768px) {
+      height: 0.075rem;
+      margin: 0.75rem 0rem 0rem 0rem;
+    }
   }
 `;
 
@@ -235,11 +249,11 @@ const Header = styled(motion.div)`
   display: flex;
   justify-content: space-between;
   overflow: hidden;
-  img {
+  /* img {
     width: 2rem;
     height: 2rem;
     display: inline;
-  }
+  } */
   .rating {
     text-align: right;
     padding: 1.5rem 0rem 0rem 0rem;
@@ -264,24 +278,31 @@ const Stats = styled(motion.div)`
   /* background: blue; */
   align-items: center;
   text-align: center; //Added this
-
   @media (max-width: 1024px) {
-    width: 33%;
+    width: 28%;
+    justify-content: right;
   }
   img {
     width: 2rem;
     height: 2rem;
     display: inline;
     @media (max-width: 1750px) {
-      width: 1.5em;
-      height: 1.5em;
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+    @media (max-width: 768px) {
+      width: 1.2rem;
+      height: 1.2rem;
     }
   }
-  p {
+  /* p {
     @media (max-width: 1750px) {
-      font-size: 1em;
+      font-size: 1rem;
     }
-  }
+    @media (max-width: 768px) {
+      font-size: 0.75rem;
+    }
+  } */
 `;
 
 const Info = styled(motion.div)`
@@ -305,6 +326,10 @@ const Platform = styled(motion.div)`
   @media (max-width: 1750px) {
     flex-basis: 15rem;
   }
+  @media (max-width: 768px) {
+    padding: 0.25rem 1rem;
+    flex-basis: 10rem;
+  }
 `;
 
 const Platforms = styled(motion.div)`
@@ -316,6 +341,9 @@ const Platforms = styled(motion.div)`
 
 const Media = styled(motion.div)`
   margin-top: 5rem;
+  @media (max-width: 768px) {
+    margin-top: 2.5rem;
+  }
   img {
     width: 100%;
   }
@@ -323,6 +351,9 @@ const Media = styled(motion.div)`
 
 const Description = styled(motion.div)`
   margin: 5rem 0rem;
+  @media (max-width: 768px) {
+    margin: 2.5rem 0rem;
+  }
 `;
 
 const Gallery = styled(motion.div)`

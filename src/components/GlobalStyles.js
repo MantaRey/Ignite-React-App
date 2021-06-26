@@ -22,8 +22,7 @@ body {
 h1 {
   padding-top: 0.25rem;
   @media (max-width: 768px) {
-    /* font-size: 1.25rem;
-    padding-top: 0.5rem; */
+    font-size: 1.5rem;
   }
   @media (max-width: 426px) {
     font-size: 1rem;

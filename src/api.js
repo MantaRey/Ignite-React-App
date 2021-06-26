@@ -39,60 +39,60 @@ const fiveYearsAgo = `${currentYear - 5}-${currentMonth}-${currentDay}`;
 // const eightYearsAgo = `${currentYear - 8}-${currentMonth}-${currentDay}`;
 
 //Upcoming Games
-const upcoming_games = `games?${key_url}&dates=${currentDate},${nextYear}&ordering=-added&page_size=48`;
+const upcoming_games = `games?${key_url}&dates=${currentDate},${nextYear}&ordering=-added&page_size=40`;
 export const upcomingGamesURL = () => `${base_url}${upcoming_games}`;
 
 //Popular Games (One Year Ago - Today)
-const popular_games = `games?${key_url}&dates=${lastYear},${currentDate}&ordering=-added&page_size=48`;
+const popular_games = `games?${key_url}&dates=${lastYear},${currentDate}&ordering=-added&page_size=40`;
 export const popularGamesURL = () => `${base_url}${popular_games}`;
 //Popular Games (Two Years Ago - Today)
-const popular_games_two_years = `games?${key_url}&dates=${twoYearsAgo},${currentDate}&ordering=-added&page_size=48`;
+const popular_games_two_years = `games?${key_url}&dates=${twoYearsAgo},${currentDate}&ordering=-added&page_size=40`;
 export const popularGamesTwoYearsURL = () =>
   `${base_url}${popular_games_two_years}`;
 //Popular Games (Three Years Ago - Today)
-const popular_games_three_years = `games?${key_url}&dates=${threeYearsAgo},${currentDate}&ordering=-added&page_size=48`;
+const popular_games_three_years = `games?${key_url}&dates=${threeYearsAgo},${currentDate}&ordering=-added&page_size=40`;
 export const popularGamesThreeYearsURL = () =>
   `${base_url}${popular_games_three_years}`;
 //Popular Games (Five Years Ago - Today)
-const popular_games_five_years = `games?${key_url}&dates=${fiveYearsAgo},${currentDate}&ordering=-added&page_size=48`;
+const popular_games_five_years = `games?${key_url}&dates=${fiveYearsAgo},${currentDate}&ordering=-added&page_size=40`;
 export const popularGamesFiveYearsURL = () =>
   `${base_url}${popular_games_five_years}`;
 
 //Highest User Rated Games (One Year Ago - Today)
-const highest_rated = `games?${key_url}&dates=${lastYear},${currentDate}&ordering=-rating&page_size=48`;
+const highest_rated = `games?${key_url}&dates=${lastYear},${currentDate}&ordering=-rating&page_size=40`;
 export const highestRatedGamesURL = () => `${base_url}${highest_rated}`;
 //Highest User Rated Games (Two Years Ago - Today)
-const highest_rated_two_years = `games?${key_url}&dates=${twoYearsAgo},${currentDate}&ordering=-rating&page_size=48`;
+const highest_rated_two_years = `games?${key_url}&dates=${twoYearsAgo},${currentDate}&ordering=-rating&page_size=40`;
 export const highestRatedGamesTwoYearsURL = () =>
   `${base_url}${highest_rated_two_years}`;
 //Highest User Rated Games (Three Years Ago - Today)
-const highest_rated_three_years = `games?${key_url}&dates=${threeYearsAgo},${currentDate}&ordering=-rating&page_size=48`;
+const highest_rated_three_years = `games?${key_url}&dates=${threeYearsAgo},${currentDate}&ordering=-rating&page_size=40`;
 export const highestRatedGamesThreeYearsURL = () =>
   `${base_url}${highest_rated_three_years}`;
 //Highest User Rated Games (Five Years Ago - Today)
-const highest_rated_five_years = `games?${key_url}&dates=${fiveYearsAgo},${currentDate}&ordering=-rating&page_size=48`;
+const highest_rated_five_years = `games?${key_url}&dates=${fiveYearsAgo},${currentDate}&ordering=-rating&page_size=40`;
 export const highestRatedGamesFiveYearsURL = () =>
   `${base_url}${highest_rated_five_years}`;
 
 //Highest Metacritic Games (One Year Ago - Today)
-const highest_metacritic = `games?${key_url}&dates=${lastYear},${currentDate}&ordering=-metacritic&page_size=48`;
+const highest_metacritic = `games?${key_url}&dates=${lastYear},${currentDate}&ordering=-metacritic&page_size=40`;
 export const highestMetacriticGamesURL = () =>
   `${base_url}${highest_metacritic}`;
 //Highest Metacritic Games (Two Years Ago - Today)
-const highest_metacritic_two_years = `games?${key_url}&dates=${twoYearsAgo},${currentDate}&ordering=-metacritic&page_size=48`;
+const highest_metacritic_two_years = `games?${key_url}&dates=${twoYearsAgo},${currentDate}&ordering=-metacritic&page_size=40`;
 export const highestMetacriticGamesTwoYearsURL = () =>
   `${base_url}${highest_metacritic_two_years}`;
 //Highest Metacritic Games (Three Years Ago - Today)
-const highest_metacritic_three_years = `games?${key_url}&dates=${threeYearsAgo},${currentDate}&ordering=-metacritic&page_size=48`;
+const highest_metacritic_three_years = `games?${key_url}&dates=${threeYearsAgo},${currentDate}&ordering=-metacritic&page_size=40`;
 export const highestMetacriticGamesThreeYearsURL = () =>
   `${base_url}${highest_metacritic_three_years}`;
 //Highest Metacritic Games (Five Years Ago - Today)
-const highest_metacritic_five_years = `games?${key_url}&dates=${fiveYearsAgo},${currentDate}&ordering=-metacritic&page_size=48`;
+const highest_metacritic_five_years = `games?${key_url}&dates=${fiveYearsAgo},${currentDate}&ordering=-metacritic&page_size=40`;
 export const highestMetacriticGamesFiveYearsURL = () =>
   `${base_url}${highest_metacritic_five_years}`;
 
 //New Games
-const new_games = `games?${key_url}&dates=${lastYear},${currentDate}&ordering=-released&page_size=48`;
+const new_games = `games?${key_url}&dates=${lastYear},${currentDate}&ordering=-released&page_size=40`;
 // const new_games = `games?${key_url}&dates=${lastYear},${currentDate}&page_size=12`; //Seems to be new games that were popular
 export const newGamesURL = () => `${base_url}${new_games}`;
 
