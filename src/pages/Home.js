@@ -9,6 +9,7 @@ import {
 import { initiateLoad, successfulLoad } from "../actions/metaDataAction";
 //Components
 import Game from "../components/Game";
+import GameMobileView from "../components/GameMobileView";
 import GameDetail from "../components/GameDetail";
 //Styling and Animation
 import styled from "styled-components";
@@ -564,6 +565,7 @@ const Home = () => {
 };
 
 const GameList = styled(motion.div)`
+  /* background: rgba(179, 210, 221, 0.2); //Added this. Might change back later. */
   padding: 0rem 5rem;
   @media (max-width: 1536px) {
     padding: 0rem 5rem;
@@ -586,6 +588,10 @@ const GameList = styled(motion.div)`
     /* top: 5rem; */ //Do not need this anymore because StickyTop
     @media (max-width: 768px) {
       height: 0.15rem;
+    }
+    @media (max-width: 580px) {
+      height: 0.1rem;
+      margin-bottom: 1.5rem;
     }
     @media (max-width: 426px) {
       height: 0.1rem;
@@ -644,7 +650,6 @@ const Header = styled(motion.div)`
       background: #ff7676;
       color: white;
       opacity: 1;
-      /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); */
     }
     .icon {
       /* background: pink; */
@@ -691,6 +696,10 @@ const Header = styled(motion.div)`
       @media (max-width: 768px) {
         font-size: 0.8rem;
         padding: 0.5rem 1rem;
+      }
+      @media (max-width: 580px) {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.5rem;
       }
       @media (max-width: 426px) {
         font-size: 0.7rem;
@@ -745,6 +754,10 @@ const Button = styled(motion.div)`
       font-size: 1rem;
       padding: 0.5rem 1rem;
     }
+    @media (max-width: 580px) {
+      font-size: 0.8rem;
+      padding: 0.25rem 0.5rem;
+    }
     @media (max-width: 426px) {
       font-size: 0.8rem;
       padding: 0.25rem 0.5rem;
@@ -763,54 +776,66 @@ const Games = styled(motion.div)`
   grid-template-columns: repeat(auto-fit, minmax(475px, 1fr));
   // ^^^ Changed from 500px
   grid-column-gap: 3rem;
-  grid-row-gap: 5rem;
+  grid-row-gap: 3rem;
   @media (max-width: 1675px) {
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    grid-column-gap: 2.5rem;
-    grid-row-gap: 4rem;
+    /* grid-column-gap: 2.5rem;
+    grid-row-gap: 4rem; */
+    grid-column-gap: 2rem;
+    grid-row-gap: 2rem;
   }
   @media (max-width: 1536px) {
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    grid-column-gap: 2.5rem;
-    grid-row-gap: 4rem;
+    /* grid-column-gap: 2.5rem;
+    grid-row-gap: 4rem; */
+    grid-column-gap: 2rem;
+    grid-row-gap: 2rem;
   }
   @media (max-width: 1440px) {
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    grid-column-gap: 2.5rem;
-    grid-row-gap: 4rem;
+    /* grid-column-gap: 2.5rem;
+    grid-row-gap: 4rem; */
+    grid-column-gap: 2rem;
+    grid-row-gap: 2rem;
   }
   @media (max-width: 1294px) {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    grid-column-gap: 2.5rem;
-    grid-row-gap: 4rem;
+    /* grid-column-gap: 2.5rem;
+    grid-row-gap: 4rem; */
+    grid-column-gap: 2rem;
+    grid-row-gap: 2rem;
   }
   @media (max-width: 1140px) {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    grid-column-gap: 2.5rem;
-    grid-row-gap: 4rem;
+    /* grid-column-gap: 2.5rem;
+    grid-row-gap: 4rem; */
+    grid-column-gap: 2rem;
+    grid-row-gap: 2rem;
   }
   @media (max-width: 1024px) {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     // used to be 400px for only 2 columns, now is 3 columns like Tablet
+    /* grid-column-gap: 2rem;
+    grid-row-gap: 3rem; */
     grid-column-gap: 2rem;
-    grid-row-gap: 3rem;
+    grid-row-gap: 2rem;
   }
   @media (max-width: 896px) {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     grid-column-gap: 1.5rem;
     grid-row-gap: 2rem;
   }
   @media (max-width: 768px) {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     grid-column-gap: 1.5rem;
     grid-row-gap: 2rem;
   }
   @media (max-width: 695px) {
-    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     grid-column-gap: 1.5rem;
     grid-row-gap: 2rem;
   }
-  @media (max-width: 478px) {
+  /* @media (max-width: 478px) {
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     grid-column-gap: 1rem;
     grid-row-gap: 1rem;
@@ -819,6 +844,21 @@ const Games = styled(motion.div)`
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     grid-column-gap: 0.75rem;
     grid-row-gap: 0.75rem;
+  } */
+  @media (max-width: 478px) {
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    grid-column-gap: 1rem;
+    grid-row-gap: 1rem;
+  }
+  @media (max-width: 427px) {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-column-gap: 1rem;
+    grid-row-gap: 1rem;
+  }
+  @media (max-width: 300px) {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-column-gap: 1rem;
+    grid-row-gap: 1rem;
   }
 `;
 

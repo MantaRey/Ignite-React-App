@@ -59,8 +59,11 @@ const StyledNav = styled(motion.nav)`
   @media (max-width: 768px) {
     padding: 2rem 2.5rem;
   }
+  @media (max-width: 580px) {
+    padding: 0.5rem 1rem 0.5rem 1rem;
+  }
   @media (max-width: 426px) {
-    padding: 0.5rem 1rem 2rem 1rem;
+    padding: 0.5rem 1rem 0.5rem 1rem;
   }
   input {
     width: 30%;
@@ -80,11 +83,23 @@ const StyledNav = styled(motion.nav)`
       font-size: 1.2rem;
     }
     @media (max-width: 768px) {
-      width: 50%;
+      width: 60%;
       font-size: 1rem;
     }
+    @media (max-width: 580px) {
+      width: 70%;
+      font-size: 0.8rem;
+    }
     @media (max-width: 426px) {
-      width: 60%;
+      width: 70%;
+      font-size: 0.8rem;
+    }
+    @media (max-width: 376px) {
+      width: 70%;
+      font-size: 0.8rem;
+    }
+    @media (max-width: 321px) {
+      width: 70%;
       font-size: 0.8rem;
     }
     &:focus {
@@ -109,6 +124,10 @@ const StyledNav = styled(motion.nav)`
       font-size: 1rem;
       padding: 0.5rem 1rem;
     }
+    @media (max-width: 580px) {
+      font-size: 0.8rem;
+      padding: 0.5rem 1rem;
+    }
     @media (max-width: 426px) {
       font-size: 0.8rem;
       padding: 0.5rem 1rem;
@@ -121,6 +140,12 @@ const Logo = styled(motion.div)`
   justify-content: center;
   padding: 1rem;
   cursor: pointer;
+  @media (max-width: 768px) {
+    padding: 0.5rem;
+  }
+  @media (max-width: 426px) {
+    padding: 0.5rem;
+  }
   img {
     width: 2rem;
     height: 2rem;
@@ -128,9 +153,15 @@ const Logo = styled(motion.div)`
       width: 2rem;
       height: 2rem;
     }
+    @media (max-width: 580px) {
+      width: 1.5rem;
+      height: 1.5rem;
+      /* padding: 0.5rem; */
+    }
     @media (max-width: 426px) {
       width: 1.5rem;
       height: 1.5rem;
+      /* padding: 0.5rem; */
     }
   }
   &:hover {
