@@ -21,6 +21,12 @@ body {
 }
 h1 {
   padding-top: 0.25rem;
+  @media (min-width: 1800px) {
+    font-size: 2.6vw;
+  }
+  @media (max-width: 896px) {
+    font-size: 1.625rem; //26px
+  }
   @media (max-width: 768px) {
     font-size: 1.5rem; //24px
   }
@@ -32,13 +38,20 @@ h1 {
   }
 }
 h2 {
-    font-size: 3rem; //48px
+    /* font-size: 3rem; //48px */
+    font-size: 2.5vw;
     font-family: 'Abril Fatface', cursive;
     font-weight: lighter;
     color: #333;
+    @media (max-width: 1800px) {
+    font-size: 3rem; //34px
+    }
     @media (max-width: 1536px) {
     font-size: 2.125rem; //34px
     }
+    @media (max-width: 896px) {
+    font-size: 1.875rem; //30px
+  }
     @media (max-width: 768px) {
       font-size: 1.75rem; //28px
     }
@@ -53,12 +66,21 @@ h2 {
     }
 }
 h3 {
-    font-size: 1.3125rem; //21px
+    /* font-size: 1.3125rem; //21px */
+    font-size: 1vw;
     color: #333;
     padding: 1.5rem 0rem;
+    @media (max-width: 1800px) {
+      font-size: 1.3125rem; //18px
+      padding: 1.5rem 0rem;
+    }
     @media (max-width: 1536px) {
       font-size: 1.125rem; //18px
       padding: 1.5rem 0rem;
+    }
+    @media (max-width: 896px) {
+      font-size: 1rem; //16px
+      padding: .5rem 0rem;
     }
     @media (max-width: 768px) {
       font-size: .8125rem; //13px
@@ -78,11 +100,18 @@ h3 {
     }
 }
 p {
-    font-size: 1.25rem; //20px
+    /* font-size: 1.25rem; //20px */
+    font-size: 0.85vw;
     line-height: 200%;
     color: #696969;
+    @media (max-width: 1800px) {
+      font-size: 1.25rem; //20px
+  }
     @media (max-width: 1536px) {
       font-size: 1rem; //16px
+  }
+    @media (max-width: 896px) {
+        font-size: .875rem; //14px
   }
     @media (max-width: 768px) {
       font-size: .75rem; //12px

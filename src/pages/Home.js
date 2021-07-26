@@ -9,7 +9,6 @@ import {
 import { initiateLoad, successfulLoad } from "../actions/metaDataAction";
 //Components
 import Game from "../components/Game";
-import GameMobileView from "../components/GameMobileView";
 import GameDetail from "../components/GameDetail";
 //Styling and Animation
 import styled from "styled-components";
@@ -660,7 +659,12 @@ const Header = styled(motion.div)`
       margin-top: 1rem;
       margin-left: 1rem;
       width: fill;
-      height: 3rem;
+      /* height: 3rem; */
+      height: 1.2vw;
+      @media (max-width: 1800px) {
+        width: fill;
+        height: 3rem;
+      }
       @media (max-width: 1536px) {
         width: fill;
         height: 2rem;
@@ -677,7 +681,8 @@ const Header = styled(motion.div)`
     }
     button {
       min-height: 4vh;
-      font-size: 1.5rem;
+      /* font-size: 1.5rem; */
+      font-size: 1.2vw;
       margin-top: 1rem;
       border: none;
       padding: 0.5rem 2rem;
@@ -685,6 +690,10 @@ const Header = styled(motion.div)`
       color: #ff7676;
       background: white;
       opacity: 0.8;
+      @media (max-width: 1800px) {
+        font-size: 1.5rem;
+        padding: 0.5rem 2rem;
+      }
       @media (max-width: 1536px) {
         font-size: 1rem;
         padding: 0.5rem 2rem;
@@ -730,7 +739,8 @@ const Button = styled(motion.div)`
   }
   button {
     min-height: 4vh;
-    font-size: 1.5rem;
+    /* font-size: 1.5rem; */
+    font-size: 1.2vw;
     margin-top: 1rem;
     border: none;
     padding: 0.5rem 2rem;
@@ -741,6 +751,10 @@ const Button = styled(motion.div)`
       background: #ff7676;
       color: white;
       box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    }
+    @media (max-width: 1800px) {
+      font-size: 1.5rem;
+      padding: 0.5rem 2rem;
     }
     @media (max-width: 1536px) {
       font-size: 1.2rem;
@@ -773,10 +787,17 @@ const Games = styled(motion.div)`
   min-height: 40vh;
   /* min-height: 80vh; */ //Changed becuz Search Results less than intended where formatted oddly
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(475px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(20%, 1fr));
   // ^^^ Changed from 500px
   grid-column-gap: 3rem;
   grid-row-gap: 3rem;
+  @media (max-width: 1800px) {
+    grid-template-columns: repeat(auto-fit, minmax(425px, 1fr));
+    /* grid-column-gap: 2.5rem;
+    grid-row-gap: 4rem; */
+    grid-column-gap: 2rem;
+    grid-row-gap: 2rem;
+  }
   @media (max-width: 1675px) {
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     /* grid-column-gap: 2.5rem;
@@ -799,21 +820,28 @@ const Games = styled(motion.div)`
     grid-row-gap: 2rem;
   }
   @media (max-width: 1294px) {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    /* grid-column-gap: 2.5rem;
+    grid-row-gap: 4rem; */
+    grid-column-gap: 2rem;
+    grid-row-gap: 2rem;
+  }
+  @media (max-width: 1250px) {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     /* grid-column-gap: 2.5rem;
     grid-row-gap: 4rem; */
     grid-column-gap: 2rem;
     grid-row-gap: 2rem;
   }
   @media (max-width: 1140px) {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     /* grid-column-gap: 2.5rem;
     grid-row-gap: 4rem; */
     grid-column-gap: 2rem;
     grid-row-gap: 2rem;
   }
   @media (max-width: 1024px) {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     // used to be 400px for only 2 columns, now is 3 columns like Tablet
     /* grid-column-gap: 2rem;
     grid-row-gap: 3rem; */
@@ -821,7 +849,7 @@ const Games = styled(motion.div)`
     grid-row-gap: 2rem;
   }
   @media (max-width: 896px) {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
     grid-column-gap: 1.5rem;
     grid-row-gap: 2rem;
   }
@@ -835,18 +863,13 @@ const Games = styled(motion.div)`
     grid-column-gap: 1.5rem;
     grid-row-gap: 2rem;
   }
-  /* @media (max-width: 478px) {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  @media (max-width: 580px) {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     grid-column-gap: 1rem;
     grid-row-gap: 1rem;
   }
-  @media (max-width: 350px) {
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    grid-column-gap: 0.75rem;
-    grid-row-gap: 0.75rem;
-  } */
-  @media (max-width: 478px) {
-    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+  @media (max-width: 500px) {
+    grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
     grid-column-gap: 1rem;
     grid-row-gap: 1rem;
   }

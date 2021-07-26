@@ -281,9 +281,15 @@ const Detail = styled(motion.div)`
     /* background: cyan; */
   }
   .rating img {
-    width: 2rem;
-    height: 2rem;
+    /* width: 2rem;
+    height: 2rem; */
+    width: 1.2vw;
+    height: 1.2vw;
     display: inline;
+    @media (max-width: 1800px) {
+      width: 2rem;
+      height: 2rem;
+    }
     @media (max-width: 768px) {
       width: 1.5rem;
       height: 1.5rem;
@@ -344,14 +350,28 @@ const Stats = styled(motion.div)`
     width: 28%;
     justify-content: right;
   }
+  @media (max-width: 1024px) {
+    width: 28%;
+    justify-content: right;
+  }
+  @media (max-width: 890px) {
+    width: 33%;
+    justify-content: right;
+  }
   // --- Any Screen smaller than 768px (Tablet) will use the alternative Mobile layout --- //
   @media (max-width: 768px) {
     display: none;
   }
   img {
-    width: 2rem;
-    height: 2rem;
+    /* width: 2rem;
+    height: 2rem; */
+    width: 1vw;
+    height: 1vw;
     display: inline;
+    @media (max-width: 1800px) {
+      width: 2rem;
+      height: 2rem;
+    }
     @media (max-width: 1750px) {
       width: 1.5rem;
       height: 1.5rem;
@@ -366,7 +386,12 @@ const Stats = styled(motion.div)`
 const Platform = styled(motion.div)`
   /* background: green; */
   padding: 0.5rem 2rem;
-  flex-basis: 15rem; // Used to be 15rem and looked awesome for games with 6 platforms, but sucked for 2-3
+  /* flex-basis: 15rem; // Used to be 15rem and looked awesome for games with 6 platforms, but sucked for 2-3 */
+  flex-basis: 10vw;
+  min-width: max-content;
+  @media (max-width: 1800px) {
+    flex-basis: 15rem;
+  }
   @media (max-width: 1750px) {
     flex-basis: 15rem;
   }
@@ -379,8 +404,21 @@ const Platform = styled(motion.div)`
 const Platforms = styled(motion.div)`
   /* background: orange; */
   display: flex;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 45vh;
+  max-width: 50vw;
   justify-content: space-evenly;
   flex-wrap: wrap;
+  &::-webkit-scrollbar {
+    width: 0.25rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: lightgray;
+  }
+  &::-webkit-scrollbar-track {
+    background: white;
+  }
 `;
 
 const Media = styled(motion.div)`
@@ -447,7 +485,7 @@ const Platform_Mobile_View = styled(motion.div)`
 
 const Stats_Mobile_View = styled(motion.div)`
   text-align: center;
-  margin-top: 0.5rem; //This is sometimes applies oddly when I first start up the website. Changed from 0.5 to see if bug fixes itself. Didnt work.::after..
+  margin-top: 0.5rem; //This is sometimes applies oddly when I first start up the website. Changed from "margin-top: 0.5" to see if bug fixes itself. Didnt work after..
   @media (min-width: 769px) {
     display: none;
   }

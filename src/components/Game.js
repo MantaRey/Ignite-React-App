@@ -104,6 +104,10 @@ const StyledGame = styled(motion.div)`
       width: 100%;
       height: 40vh;
     }
+    @media (max-width: 1024px) {
+      width: 100%;
+      height: 35vh;
+    }
     @media (max-width: 768px) {
       width: 100%;
       height: 35vh;
