@@ -40,3 +40,12 @@ export const lineAnim = {
     transition: { duration: 2 },
   },
 };
+
+export const opacityOnOff = {
+  hidden: {
+    opacity: 0,
+  },
+  show: {
+    opacity: 1,
+  },
+};

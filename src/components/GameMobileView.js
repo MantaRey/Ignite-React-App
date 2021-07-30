@@ -12,16 +12,7 @@ import { gameCardReveal } from "../animations";
 import { Link } from "react-router-dom";
 
 const Game = ({ game }) => {
-  const {
-    name,
-    released,
-    background_image,
-    short_screenshots,
-    rating,
-    esrb_rating,
-    genres,
-    id,
-  } = game;
+  const { name, released, background_image, short_screenshots, id } = game;
 
   //Convert id to a string from an integer, used for layoutID (Animation)
   const stringPathId = id.toString();
@@ -64,11 +55,6 @@ const Game = ({ game }) => {
               }
               alt={name}
             />
-            {/* <div className="genres">
-              {genres?.map((genre) => (
-                <button key={genre.name}>{genre.name}</button>
-              ))}
-            </div> */}
           </Link>
         </StyledGame>
       )}
@@ -104,21 +90,13 @@ const StyledGame = styled(motion.div)`
       width: 100%;
       height: 40vh;
     }
-    @media (max-width: 1024px) {
+    /* @media (max-width: 768px) {
       width: 100%;
       height: 35vh;
-    }
-    @media (max-width: 768px) {
-      width: 100%;
-      height: 35vh;
-    }
-    @media (max-width: 580px) {
-      width: 100%;
-      height: 30vh;
-    }
+    } */
     @media (max-width: 426px) {
       width: 100%;
-      height: 25vh;
+      height: 30vh;
     }
     @media (max-width: 321px) {
       width: 100%;
@@ -130,29 +108,6 @@ const StyledGame = styled(motion.div)`
     @media (max-width: 768px) {
       padding-left: 0.5rem;
       padding-right: 0.5rem;
-    }
-    @media (max-width: 426px) {
-    }
-  }
-
-  .genres {
-    display: flex;
-    justify-content: left;
-    overflow: auto;
-    button {
-      color: #696969;
-      background: rgba(173, 216, 230, 0.2);
-      border: none;
-      border-radius: 50rem;
-      padding: 0rem 1rem;
-      margin: 0.1rem 0.25rem;
-      min-width: max-content;
-      &:hover {
-        background: rgba(173, 216, 230, 0.75);
-      }
-    }
-    &::-webkit-scrollbar {
-      display: none;
     }
   }
   &:hover {

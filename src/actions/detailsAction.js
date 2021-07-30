@@ -12,7 +12,6 @@ export const loadDetails = (id, screenshots) => async (dispatch) => {
     payload: {
       game: details.data,
       screenshots: screenshots,
-      // screen: screenshots.data.results,
     },
   });
 };
