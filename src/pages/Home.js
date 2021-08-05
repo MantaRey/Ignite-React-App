@@ -533,7 +533,7 @@ const Home = () => {
             ></motion.div>
           </StickyTop>
           <Games>
-            {recent.map((game) => (
+            {recent.slice(0, numberOfNewGames).map((game) => (
               <Game game={game} key={game.id} />
             ))}
           </Games>
