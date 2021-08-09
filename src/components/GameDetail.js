@@ -143,22 +143,22 @@ const GameDetail = ({ pathId }) => {
                 </Platforms>
               </Stats>
             </Important>
-            <Stats_Mobile_View>
+            <StatsMobileView>
               <h3>Platforms</h3>
-              <Platforms_Mobile_View>
+              <PlatformsMobileView>
                 {game.platforms?.map((data) => (
-                  <Platform_Mobile_View key={data.platform.id}>
+                  <PlatformMobileView key={data.platform.id}>
                     <img
                       src={getPlatform(data.platform.name)}
                       alt={data.platform.name}
                       title={data.platform.name}
                     />
                     <p>{data.platform.name}</p>
-                  </Platform_Mobile_View>
+                  </PlatformMobileView>
                 ))}
-              </Platforms_Mobile_View>
+              </PlatformsMobileView>
               <div className="line"></div>
-            </Stats_Mobile_View>
+            </StatsMobileView>
             <Media>
               <motion.img
                 layoutId={`image ${pathId}`}
@@ -454,7 +454,7 @@ const Gallery = styled(motion.div)`
   }
 `;
 
-const Platforms_Mobile_View = styled(motion.div)`
+const PlatformsMobileView = styled(motion.div)`
   /* background: green; */
   overflow: auto;
   display: flex;
@@ -466,7 +466,7 @@ const Platforms_Mobile_View = styled(motion.div)`
   }
 `;
 
-const Platform_Mobile_View = styled(motion.div)`
+const PlatformMobileView = styled(motion.div)`
   /* background: yellow; */
   align-items: center;
   text-align: center;
@@ -481,7 +481,7 @@ const Platform_Mobile_View = styled(motion.div)`
   }
 `;
 
-const Stats_Mobile_View = styled(motion.div)`
+const StatsMobileView = styled(motion.div)`
   text-align: center;
   margin-top: 0.5rem; //This is sometimes applies oddly when I first start up the website. Changed from "margin-top: 0.5" to see if bug fixes itself. Didnt work after..
   @media (min-width: 769px) {

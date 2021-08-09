@@ -12,16 +12,8 @@ import { gameCardReveal } from "../animations";
 import { Link } from "react-router-dom";
 
 const Game = ({ game }) => {
-  const {
-    name,
-    released,
-    background_image,
-    short_screenshots,
-    rating,
-    esrb_rating,
-    genres,
-    id,
-  } = game;
+  //possible data to extract at a later data: rating, esrb_rating, genres,
+  const { name, released, background_image, short_screenshots, id } = game;
 
   //Convert id to a string from an integer, used for layoutID (Animation)
   const stringPathId = id.toString();

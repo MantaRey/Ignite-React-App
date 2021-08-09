@@ -6,7 +6,7 @@ import {
   loadFromLocal,
   loadFilteredGames,
 } from "../actions/gamesAction";
-import { initiateLoad, successfulLoad } from "../actions/metaDataAction";
+// import { initiateLoad, successfulLoad } from "../actions/metaDataAction"; // Currently not being used
 //Components
 import Game from "../components/Game";
 import GameDetail from "../components/GameDetail";
