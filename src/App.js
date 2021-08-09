@@ -13,8 +13,11 @@ function App() {
       window.scrollTo(-10, 0);
     }, 1);
   };
+  const divStyle = {
+    background: "rgba(179, 210, 221, 0.1)",
+  };
   return (
-    <div className="App">
+    <div className="App" style={divStyle}>
       <GlobalStyles />
       <Nav />
       <Route path={["/game/:id", "/"]} component={Home} />

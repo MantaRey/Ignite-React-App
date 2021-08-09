@@ -561,7 +561,7 @@ const Home = () => {
 };
 
 const GameList = styled(motion.div)`
-  /* background: rgba(179, 210, 221, 0.2); //Added this. Might change back later. */
+  background: rgba(179, 210, 221, 0.02); //Added this. Might change back later.
   padding: 0rem 5rem;
   @media (max-width: 1536px) {
     padding: 0rem 5rem;
@@ -574,6 +574,18 @@ const GameList = styled(motion.div)`
   }
   @media (max-width: 426px) {
     padding: 0rem 1rem;
+  }
+  .searched {
+    padding: 0rem 0rem 5rem 0rem;
+    @media (max-width: 1536px) {
+      padding: 0rem 0rem 5rem 0rem;
+    }
+    @media (max-width: 768px) {
+      padding: 0rem 0rem 5rem 0rem;
+    }
+    @media (max-width: 426px) {
+      padding: 0rem 0rem 5rem 0rem;
+    }
   }
   .line {
     height: 0.25rem;
@@ -599,8 +611,11 @@ const GameList = styled(motion.div)`
 const StickyTop = styled(motion.div)`
   position: -webkit-sticky;
   position: sticky;
-  top: -5rem;
-  @media (max-width: 1536px) {
+  top: -1rem;
+  @media (max-width: 768px) {
+    top: -0.5rem;
+  }
+  /* @media (max-width: 1536px) {
     top: -4rem;
   }
   @media (max-width: 768px) {
@@ -608,39 +623,42 @@ const StickyTop = styled(motion.div)`
   }
   @media (max-width: 426px) {
     top: -1.5rem;
-  }
+  } */
 `;
 
 const Header = styled(motion.div)`
+  /* background: rgba(255, 255, 255, 0.5); */
   background: rgba(255, 255, 255, 0.5);
+  /* box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2); */
   display: flex;
   justify-content: space-between;
   align-items: center;
   h2 {
-    padding: 5rem 0rem 1rem 0rem;
+    margin-top: 1rem;
+    padding: 0rem 0rem 1rem 0rem;
     @media (max-width: 1536px) {
-      padding: 4rem 0rem 1rem 0rem;
+      padding: 0rem 0rem 1rem 0rem;
     }
     @media (max-width: 768px) {
-      padding: 3rem 0rem 1rem 0rem;
+      padding: 0rem 0rem 1rem 0rem;
     }
     @media (max-width: 426px) {
-      padding: 2rem 0rem 0.5rem 0rem;
+      padding: 0rem 0rem 0.5rem 0rem;
     }
   }
   .filter {
     /* background: red; */
     display: flex;
     justify-content: space-evenly;
-    padding: 5rem 0rem 1rem 0rem;
+    padding: 0rem 0rem 1rem 0rem;
     @media (max-width: 1536px) {
-      padding: 4rem 0rem 1rem 0rem;
+      padding: 0rem 0rem 1rem 0rem;
     }
     @media (max-width: 768px) {
-      padding: 3rem 0rem 1rem 0rem;
+      padding: 0rem 0rem 1rem 0rem;
     }
     @media (max-width: 426px) {
-      padding: 1rem 0rem 0.5rem 0rem;
+      padding: 0rem 0rem 0.5rem 0rem;
     }
     .selected {
       background: #ff7676;
@@ -743,7 +761,8 @@ const Button = styled(motion.div)`
     padding: 0.5rem 2rem;
     cursor: pointer;
     color: #ff7676;
-    background: white;
+    /* background: white; */
+    background: rgba(179, 210, 221, 0);
     &:hover {
       background: #ff7676;
       color: white;

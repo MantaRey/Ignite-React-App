@@ -52,18 +52,20 @@ const Nav = () => {
 
 const StyledNav = styled(motion.nav)`
   padding: 3rem 5rem;
+  margin-bottom: 2rem;
   text-align: center;
   @media (max-width: 1536px) {
     padding: 2rem 5rem;
   }
   @media (max-width: 768px) {
-    padding: 2rem 2.5rem;
+    padding: 2rem 2.5rem 2rem 2.5rem;
   }
   @media (max-width: 580px) {
-    padding: 0.5rem 1rem 0.5rem 1rem;
+    padding: 0.5rem 1rem 2rem 1rem;
   }
   @media (max-width: 426px) {
-    padding: 0.5rem 1rem 0.5rem 1rem;
+    padding: 0.5rem 1rem 2rem 1rem;
+    margin-bottom: 1rem;
   }
   input {
     width: 30%;
