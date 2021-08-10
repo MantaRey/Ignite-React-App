@@ -6,13 +6,11 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import {
-  lineAnim,
   titleAnim,
   ratingAnim,
   platformAnim,
   parent,
 } from "../animations";
-import { useScroll } from "./useScroll";
 import { smallImage } from "../util";
 //System Images
 import playstation from "../img/playstation.svg";
