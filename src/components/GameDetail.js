@@ -5,6 +5,14 @@ import { useHistory } from "react-router-dom";
 //Styling and Animation
 import styled from "styled-components";
 import { motion } from "framer-motion";
+import {
+  lineAnim,
+  titleAnim,
+  ratingAnim,
+  platformAnim,
+  parent,
+} from "../animations";
+import { useScroll } from "./useScroll";
 import { smallImage } from "../util";
 //System Images
 import playstation from "../img/playstation.svg";
@@ -89,10 +97,10 @@ const GameDetail = ({ pathId }) => {
         <CardShadow className="shadow" onClick={exitDetailsHandler}>
           {scrollBarHandler()}
           <Detail layoutId={pathId}>
-            <Important>
+            <Important variants={parent} initial="hidden" animate="show">
               <Info>
                 <Header>
-                  <Title>
+                  <Title variants={titleAnim}>
                     {game.website !== "" ? (
                       <a
                         href={game.website}
@@ -115,7 +123,7 @@ const GameDetail = ({ pathId }) => {
                     )}
                   </Title>
                 </Header>
-                <div className="rating">
+                <motion.div className="rating" variants={ratingAnim}>
                   <div className="metacritic">
                     <p>
                       Metacritic: {game.metacritic ? game.metacritic : "N/A"}
@@ -123,12 +131,17 @@ const GameDetail = ({ pathId }) => {
                   </div>
                   <p>Rating: {game.rating}</p>
                   <div className="stars">{getStars()}</div>
-                </div>
+                </motion.div>
+                {/* <motion.div variants={lineAnim} className="line"></motion.div> */}
                 <div className="line"></div>
               </Info>
               <Stats>
                 <h3>Platforms</h3>
-                <Platforms>
+                <Platforms
+                  variants={platformAnim}
+                  inital="hidden"
+                  animate="show"
+                >
                   {game.platforms?.map((data) => (
                     <Platform key={data.platform.id}>
                       <img
