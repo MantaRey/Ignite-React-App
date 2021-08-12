@@ -177,6 +177,22 @@ export const loadFilteredGames = (category, year_count) => async (dispatch) => {
   }
 };
 
+export const filterClicked = (category) => async (dispatch) => {
+  switch (category) {
+    case "popular":
+      dispatch({ type: "POPULAR_FILTER_CLICKED" });
+      break;
+    case "favorite":
+      dispatch({ type: "FAVORITE_FILTER_CLICKED" });
+      break;
+    case "critic":
+      dispatch({ type: "CRITIC_FILTER_CLICKED" });
+      break;
+    default:
+      dispatch({ type: "LOADED_GAMES" });
+  }
+};
+
 export const fetchSearch = (game_name) => async (dispatch) => {
   const searchGames = await axios.get(seachGameURL(game_name));
   dispatch({

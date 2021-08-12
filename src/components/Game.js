@@ -10,6 +10,8 @@ import { useScroll } from "../components/useScroll";
 import { gameCardReveal } from "../animations";
 //Routing
 import { Link } from "react-router-dom";
+//Scrolling
+import disableScroll from "disable-scroll";
 
 const Game = ({ game }) => {
   //possible data to extract at a later data: rating, esrb_rating, genres,
@@ -30,6 +32,9 @@ const Game = ({ game }) => {
 
   //Scroll Animation Set-up for Individual Games
   const [element, controls] = useScroll();
+
+  //Re-enables the scrolling that I disabled in EmptyBox.js
+  disableScroll.off(); // re-enable scroll
 
   return (
     <>

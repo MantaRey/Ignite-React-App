@@ -5,11 +5,13 @@ import {
   loadGames,
   loadFromLocal,
   loadFilteredGames,
+  filterClicked,
 } from "../actions/gamesAction";
 // import { initiateLoad, successfulLoad } from "../actions/metaDataAction"; // Currently not being used
 //Components
 import Game from "../components/Game";
 import GameDetail from "../components/GameDetail";
+import EmptyBox from "../components/EmptyBox";
 //Styling and Animation
 import styled from "styled-components";
 import { motion } from "framer-motion";
@@ -56,6 +58,13 @@ const Home = () => {
     recent,
     searched,
   } = useSelector((state) => state.games);
+  const popularFilterClicked = useSelector(
+    (state) => state.games.popular_filter
+  );
+  const favoriteFilterClicked = useSelector(
+    (state) => state.games.favorite_filter
+  );
+  const criticFilterClicked = useSelector((state) => state.games.critic_filter);
 
   //States
   //How many Games to show for each Category
@@ -82,6 +91,7 @@ const Home = () => {
     { name: "p3Y", isSelected: "unselected" },
     { name: "p5Y", isSelected: "unselected" },
   ]);
+
   //Filter Buttons for Fan Rated Section
   const [fanFilter, setFanFilter] = useState([
     { name: "f1Y", isSelected: "selected" },
@@ -96,6 +106,7 @@ const Home = () => {
     { name: "c3Y", isSelected: "unselected" },
     { name: "c5Y", isSelected: "unselected" },
   ]);
+
   //Scroll Animation Set-up for Line
   const [element, controls] = useScroll();
   const [element2, controls2] = useScroll();
@@ -144,10 +155,13 @@ const Home = () => {
   const correctFilterButtons = (filter_category) => {
     switch (filter_category) {
       case "p":
+        dispatch(filterClicked("popular"));
         return [popularFilter, setPopularFilter, "popular"];
       case "f":
+        dispatch(filterClicked("favorite"));
         return [fanFilter, setFanFilter, "highest_rated"];
       case "c":
+        dispatch(filterClicked("critic"));
         return [criticFilter, setCriticFilter, "highest_metacritic"];
       default:
         return [
@@ -167,8 +181,6 @@ const Home = () => {
       selected[0]
     );
     const year_count = selected[1];
-    console.log(selected);
-    console.log(parseInt(selected[1]));
     copyFilter.map((button) => {
       if (parseInt(selected[1]) >= parseInt(button.name[1])) {
         updatedButtons.push({ name: button.name, isSelected: "selected" });
@@ -321,9 +333,15 @@ const Home = () => {
             ></motion.div>
           </StickyTop>
           <Games ref={elementHeader2}>
-            {popular.slice(0, numberOfPopularGames).map((game) => (
-              <Game game={game} key={game.id} />
-            ))}
+            {popular
+              .slice(0, numberOfPopularGames)
+              .map((game) =>
+                popularFilterClicked ? (
+                  <EmptyBox />
+                ) : (
+                  <Game game={game} key={game.id} />
+                )
+              )}
           </Games>
           {/* <GamesDiff></GamesDiff> */}
           <Button>
@@ -410,7 +428,9 @@ const Home = () => {
             {highest_rated
               .slice(0, numberOfFavoriteGames)
               .map((game) =>
-                game.reviews_count > 15 ? (
+                favoriteFilterClicked ? (
+                  <EmptyBox />
+                ) : game.reviews_count > 15 ? (
                   <Game game={game} key={game.id} />
                 ) : (
                   ""
@@ -498,9 +518,15 @@ const Home = () => {
             ></motion.div>
           </StickyTop>
           <Games ref={elementHeader4}>
-            {highest_metacritic.slice(0, numberOfCriticGames).map((game) => (
-              <Game game={game} key={game.id} />
-            ))}
+            {highest_metacritic
+              .slice(0, numberOfCriticGames)
+              .map((game) =>
+                criticFilterClicked ? (
+                  <EmptyBox />
+                ) : (
+                  <Game game={game} key={game.id} />
+                )
+              )}
           </Games>
           <Button>
             <button
