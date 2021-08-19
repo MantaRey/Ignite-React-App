@@ -1,4 +1,4 @@
-//Pop Up + Fade In Animation
+//Pop Up + Fade In Animation => SearchBar
 export const popUp_fadeIn = {
   hidden: {
     opacity: 0,
@@ -19,7 +19,7 @@ export const popUp_fadeIn = {
   },
 };
 
-//Scroll Animation
+//Scroll Animation => Game Cards
 export const gameCardReveal = {
   //Added "scale" recently but willing to take it back
   hidden: { opacity: 0, scale: 0.5, transition: { duration: 0.5 } },
@@ -41,6 +41,7 @@ export const lineAnim = {
   },
 };
 
+//Visible to Invisible => Category Headers
 export const opacityOnOff = {
   hidden: {
     opacity: 0,
@@ -50,6 +51,7 @@ export const opacityOnOff = {
   },
 };
 
+//Game Title Animation
 export const titleAnim = {
   hidden: {
     y: 200,
@@ -63,6 +65,7 @@ export const titleAnim = {
   },
 };
 
+//Game Ratings Animation
 export const ratingAnim = {
   hidden: {
     x: -100,
@@ -75,6 +78,7 @@ export const ratingAnim = {
   },
 };
 
+//Parent Container to control Game Detail's animation
 export const parent = {
   hidden: {},
   show: {
@@ -86,6 +90,7 @@ export const parent = {
   },
 };
 
+//Game Platform Animation
 export const platformAnim = {
   hidden: {
     x: 100,

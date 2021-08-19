@@ -19,6 +19,8 @@ import { useScroll } from "../components/useScroll";
 import { useScrollHeader } from "../components/useScrollHeader";
 import { lineAnim, opacityOnOff } from "../animations";
 import calendar from "../img/calendar.svg";
+//Scrolling
+import disableScroll from "disable-scroll";
 //Routing
 import { useLocation } from "react-router-dom";
 
@@ -195,393 +197,397 @@ const Home = () => {
 
   return (
     <>
-      {!isLoading && (
-        <GameList>
-          {(pathGameID && <GameDetail pathId={pathGameID} />) ||
-            scrollBarHandler()}
+      {isLoading && disableScroll.on()}
+      {/* prevents scrolling while content is loading */}
+      {!isLoading && disableScroll.off()}
+      {/* re-enables scrolling once content has loaded */}
+      {/* {!isLoading && ( */}
+      <GameList>
+        {(pathGameID && <GameDetail pathId={pathGameID} />) ||
+          scrollBarHandler()}
 
-          {searched.length ? (
-            // truthy vs falsey values, searched is initially empty array (=== true), searched.length when empty is 0 (===false)
-            <div className="searched">
-              <StickyTop
-                variants={opacityOnOff}
-                initial="show"
-                animate={controlsHeader0}
-              >
-                <Header>
-                  <h2>Searched Games</h2>
-                </Header>
-                <motion.div
-                  variants={lineAnim}
-                  initial="hidden"
-                  animate="show"
-                  className="line"
-                ></motion.div>
-              </StickyTop>
-              <Games ref={elementHeader0}>
-                {searched.map((game) =>
-                  game.rating !== 0 ? <Game game={game} key={game.id} /> : ""
-                )}
-              </Games>
-            </div>
-          ) : (
-            ""
-          )}
-          {/* -------------------------------------------------------------------------------------------------------------------------------------- */}
-          <div id="upcoming" className="start_of_category"></div>
-          <StickyTop
-            id="upcoming_header"
-            variants={opacityOnOff}
-            initial="show"
-            animate={controlsHeader1}
-          >
-            <Header>
-              <h2>Upcoming Games</h2>
-            </Header>
-            <motion.div
-              variants={lineAnim}
-              ref={element}
-              initial="hidden"
-              animate={controls}
-              className="line"
-            ></motion.div>
-          </StickyTop>
-          <Games ref={elementHeader1} id="upcoming_container">
-            {upcoming.slice(0, numberOfUpcomingGames).map((game) => (
-              <Game game={game} key={game.id} />
-            ))}
-          </Games>
-          <Button>
-            <button
-              onClick={() => {
-                if (upcomingButtonText[0] === "+") {
-                  setNumberOfUpcomingGames(48);
-                  setUpcomingButtonText("- Upcoming Games");
-                } else {
-                  setNumberOfUpcomingGames(12);
-                  setUpcomingButtonText("+ Upcoming Games");
-                  document.getElementById("upcoming").scrollIntoView();
-                }
-                // getMoreGames("upcoming");
-              }}
+        {searched.length ? (
+          // truthy vs falsey values, searched is initially empty array (=== true), searched.length when empty is 0 (===false)
+          <div className="searched">
+            <StickyTop
+              variants={opacityOnOff}
+              initial="show"
+              animate={controlsHeader0}
             >
-              {upcomingButtonText}
-            </button>
-          </Button>
-          {/* -------------------------------------------------------------------------------------------------------------------------------------- */}
-          <div id="popular" className="start_of_category"></div>
-          <StickyTop
-            id="popular_header"
-            variants={opacityOnOff}
-            initial="show"
-            animate={controlsHeader2}
-          >
-            <Header>
-              <h2>Popular Games</h2>
-              <div className="filter">
-                <button
-                  onClick={() => {
-                    updateSelectedHandler("p1Y");
-                    document.getElementById("popular").scrollIntoView();
-                  }}
-                  id="p1Y"
-                  className={popularFilter[0].isSelected}
-                >
-                  1Y
-                </button>
-                <button
-                  onClick={() => {
-                    updateSelectedHandler("p2Y");
-                    document.getElementById("popular").scrollIntoView();
-                  }}
-                  id="p2Y"
-                  className={popularFilter[1].isSelected}
-                >
-                  2Y
-                </button>
-                <button
-                  onClick={() => {
-                    updateSelectedHandler("p3Y");
-                    document.getElementById("popular").scrollIntoView();
-                  }}
-                  id="p3Y"
-                  className={popularFilter[2].isSelected}
-                >
-                  3Y
-                </button>
-                <button
-                  onClick={() => {
-                    updateSelectedHandler("p5Y");
-                    document.getElementById("popular").scrollIntoView();
-                  }}
-                  id="p5Y"
-                  className={popularFilter[3].isSelected}
-                >
-                  5Y
-                </button>
-                <div className="icon">
-                  <img src={calendar} alt="calendar" />
-                </div>
-              </div>
-            </Header>
-            <motion.div
-              variants={lineAnim}
-              ref={element2}
-              initial="hidden"
-              animate={controls2}
-              className="line"
-            ></motion.div>
-          </StickyTop>
-          <Games ref={elementHeader2}>
-            {popular
-              .slice(0, numberOfPopularGames)
-              .map((game) =>
-                popularFilterClicked ? (
-                  <EmptyBox />
-                ) : (
-                  <Game game={game} key={game.id} />
-                )
+              <Header>
+                <h2>Searched Games</h2>
+              </Header>
+              <motion.div
+                variants={lineAnim}
+                initial="hidden"
+                animate="show"
+                className="line"
+              ></motion.div>
+            </StickyTop>
+            <Games ref={elementHeader0}>
+              {searched?.map((game) =>
+                game.rating !== 0 ? <Game game={game} key={game.id} /> : ""
               )}
-          </Games>
-          {/* <GamesDiff></GamesDiff> */}
-          <Button>
-            <button
-              onClick={() => {
-                if (popularButtonText[0] === "+") {
-                  setNumberOfPopularGames(48);
-                  setPopularButtonText("- Popular Games");
-                } else {
-                  setNumberOfPopularGames(12);
-                  setPopularButtonText("+ Popular Games");
+            </Games>
+          </div>
+        ) : (
+          ""
+        )}
+        {/* -------------------------------------------------------------------------------------------------------------------------------------- */}
+        <div id="upcoming" className="start_of_category"></div>
+        <StickyTop
+          id="upcoming_header"
+          variants={opacityOnOff}
+          initial="show"
+          animate={controlsHeader1}
+        >
+          <Header>
+            <h2>Upcoming Games</h2>
+          </Header>
+          <motion.div
+            variants={lineAnim}
+            ref={element}
+            initial="hidden"
+            animate={controls}
+            className="line"
+          ></motion.div>
+        </StickyTop>
+        <Games ref={elementHeader1} id="upcoming_container">
+          {!isLoading &&
+            upcoming
+              ?.slice(0, numberOfUpcomingGames)
+              .map((game) => <Game game={game} key={game.id} />)}
+        </Games>
+        <Button>
+          <button
+            onClick={() => {
+              if (upcomingButtonText[0] === "+") {
+                setNumberOfUpcomingGames(48);
+                setUpcomingButtonText("- Upcoming Games");
+              } else {
+                setNumberOfUpcomingGames(12);
+                setUpcomingButtonText("+ Upcoming Games");
+                document.getElementById("upcoming").scrollIntoView();
+              }
+              // getMoreGames("upcoming");
+            }}
+          >
+            {upcomingButtonText}
+          </button>
+        </Button>
+        {/* -------------------------------------------------------------------------------------------------------------------------------------- */}
+        <div id="popular" className="start_of_category"></div>
+        <StickyTop
+          id="popular_header"
+          variants={opacityOnOff}
+          initial="show"
+          animate={controlsHeader2}
+        >
+          <Header>
+            <h2>Popular Games</h2>
+            <div className="filter">
+              <button
+                onClick={() => {
+                  updateSelectedHandler("p1Y");
                   document.getElementById("popular").scrollIntoView();
-                }
-              }}
-            >
-              {popularButtonText}
-            </button>
-          </Button>
-          {/* -------------------------------------------------------------------------------------------------------------------------------------- */}
-          <div id="favorite" className="start_of_category"></div>
-          <StickyTop
-            id="favorite_header"
-            variants={opacityOnOff}
-            initial="show"
-            animate={controlsHeader3}
-          >
-            <Header>
-              <h2>Fan Favorite Games</h2>
-              <div className="filter">
-                <button
-                  onClick={() => {
-                    updateSelectedHandler("f1Y");
-                    document.getElementById("favorite").scrollIntoView();
-                  }}
-                  id="f1Y"
-                  className={fanFilter[0].isSelected}
-                >
-                  1Y
-                </button>
-                <button
-                  onClick={() => {
-                    updateSelectedHandler("f2Y");
-                    document.getElementById("favorite").scrollIntoView();
-                  }}
-                  id="f2Y"
-                  className={fanFilter[1].isSelected}
-                >
-                  2Y
-                </button>
-                <button
-                  onClick={() => {
-                    updateSelectedHandler("f3Y");
-                    document.getElementById("favorite").scrollIntoView();
-                  }}
-                  id="f3Y"
-                  className={fanFilter[2].isSelected}
-                >
-                  3Y
-                </button>
-                <button
-                  onClick={() => {
-                    updateSelectedHandler("f5Y");
-                    document.getElementById("favorite").scrollIntoView();
-                  }}
-                  id="f5Y"
-                  className={fanFilter[3].isSelected}
-                >
-                  5Y
-                </button>
-                <div className="icon">
-                  <img src={calendar} alt="calendar" />
-                </div>
+                }}
+                id="p1Y"
+                className={popularFilter[0].isSelected}
+              >
+                1Y
+              </button>
+              <button
+                onClick={() => {
+                  updateSelectedHandler("p2Y");
+                  document.getElementById("popular").scrollIntoView();
+                }}
+                id="p2Y"
+                className={popularFilter[1].isSelected}
+              >
+                2Y
+              </button>
+              <button
+                onClick={() => {
+                  updateSelectedHandler("p3Y");
+                  document.getElementById("popular").scrollIntoView();
+                }}
+                id="p3Y"
+                className={popularFilter[2].isSelected}
+              >
+                3Y
+              </button>
+              <button
+                onClick={() => {
+                  updateSelectedHandler("p5Y");
+                  document.getElementById("popular").scrollIntoView();
+                }}
+                id="p5Y"
+                className={popularFilter[3].isSelected}
+              >
+                5Y
+              </button>
+              <div className="icon">
+                <img src={calendar} alt="calendar" />
               </div>
-            </Header>
-            <motion.div
-              variants={lineAnim}
-              ref={element3}
-              initial="hidden"
-              animate={controls3}
-              className="line"
-            ></motion.div>
-          </StickyTop>
-          <Games ref={elementHeader3}>
-            {highest_rated
-              .slice(0, numberOfFavoriteGames)
-              .map((game) =>
-                favoriteFilterClicked ? (
-                  <EmptyBox />
-                ) : game.reviews_count > 15 ? (
-                  <Game game={game} key={game.id} />
-                ) : (
-                  ""
-                )
-              )}
-          </Games>
-          <Button>
-            <button
-              onClick={() => {
-                if (favoriteButtonText[0] === "+") {
-                  setNumberOfFavoriteGames(48);
-                  setFavoriteButtonText("- Fan Favorite Games");
-                } else {
-                  setNumberOfFavoriteGames(12);
-                  setFavoriteButtonText("+ Fan Favorite Games");
+            </div>
+          </Header>
+          <motion.div
+            variants={lineAnim}
+            ref={element2}
+            initial="hidden"
+            animate={controls2}
+            className="line"
+          ></motion.div>
+        </StickyTop>
+        <Games ref={elementHeader2}>
+          {popular
+            ?.slice(0, numberOfPopularGames)
+            .map((game) =>
+              popularFilterClicked ? (
+                <EmptyBox />
+              ) : (
+                <Game game={game} key={game.id} />
+              )
+            )}
+        </Games>
+        <Button>
+          <button
+            onClick={() => {
+              if (popularButtonText[0] === "+") {
+                setNumberOfPopularGames(48);
+                setPopularButtonText("- Popular Games");
+              } else {
+                setNumberOfPopularGames(12);
+                setPopularButtonText("+ Popular Games");
+                document.getElementById("popular").scrollIntoView();
+              }
+            }}
+          >
+            {popularButtonText}
+          </button>
+        </Button>
+        {/* -------------------------------------------------------------------------------------------------------------------------------------- */}
+        <div id="favorite" className="start_of_category"></div>
+        <StickyTop
+          id="favorite_header"
+          variants={opacityOnOff}
+          initial="show"
+          animate={controlsHeader3}
+        >
+          <Header>
+            <h2>Fan Favorite Games</h2>
+            <div className="filter">
+              <button
+                onClick={() => {
+                  updateSelectedHandler("f1Y");
                   document.getElementById("favorite").scrollIntoView();
-                }
-              }}
-            >
-              {favoriteButtonText}
-            </button>
-          </Button>
-          {/* -------------------------------------------------------------------------------------------------------------------------------------- */}
-          <div id="critic" className="start_of_category"></div>
-          <StickyTop
-            id="critic_header"
-            variants={opacityOnOff}
-            initial="show"
-            animate={controlsHeader4}
-          >
-            <Header>
-              <h2>Critic Favorite Games</h2>
-              <div className="filter">
-                <button
-                  onClick={() => {
-                    updateSelectedHandler("c1Y");
-                    document.getElementById("critic").scrollIntoView();
-                  }}
-                  id="c1Y"
-                  className={criticFilter[0].isSelected}
-                >
-                  1Y
-                </button>
-                <button
-                  onClick={() => {
-                    updateSelectedHandler("c2Y");
-                    document.getElementById("critic").scrollIntoView();
-                  }}
-                  id="c2Y"
-                  className={criticFilter[1].isSelected}
-                >
-                  2Y
-                </button>
-                <button
-                  onClick={() => {
-                    updateSelectedHandler("c3Y");
-                    document.getElementById("critic").scrollIntoView();
-                  }}
-                  id="c3Y"
-                  className={criticFilter[2].isSelected}
-                >
-                  3Y
-                </button>
-                <button
-                  onClick={() => {
-                    updateSelectedHandler("c5Y");
-                    document.getElementById("critic").scrollIntoView();
-                  }}
-                  id="c5Y"
-                  className={criticFilter[3].isSelected}
-                >
-                  5Y
-                </button>
-                <div className="icon">
-                  <img src={calendar} alt="calendar" />
-                </div>
+                }}
+                id="f1Y"
+                className={fanFilter[0].isSelected}
+              >
+                1Y
+              </button>
+              <button
+                onClick={() => {
+                  updateSelectedHandler("f2Y");
+                  document.getElementById("favorite").scrollIntoView();
+                }}
+                id="f2Y"
+                className={fanFilter[1].isSelected}
+              >
+                2Y
+              </button>
+              <button
+                onClick={() => {
+                  updateSelectedHandler("f3Y");
+                  document.getElementById("favorite").scrollIntoView();
+                }}
+                id="f3Y"
+                className={fanFilter[2].isSelected}
+              >
+                3Y
+              </button>
+              <button
+                onClick={() => {
+                  updateSelectedHandler("f5Y");
+                  document.getElementById("favorite").scrollIntoView();
+                }}
+                id="f5Y"
+                className={fanFilter[3].isSelected}
+              >
+                5Y
+              </button>
+              <div className="icon">
+                <img src={calendar} alt="calendar" />
               </div>
-            </Header>
-            <motion.div
-              variants={lineAnim}
-              ref={element4}
-              initial="hidden"
-              animate={controls4}
-              className="line"
-            ></motion.div>
-          </StickyTop>
-          <Games ref={elementHeader4}>
-            {highest_metacritic
-              .slice(0, numberOfCriticGames)
-              .map((game) =>
-                criticFilterClicked ? (
-                  <EmptyBox />
-                ) : (
-                  <Game game={game} key={game.id} />
-                )
-              )}
-          </Games>
-          <Button>
-            <button
-              onClick={() => {
-                if (criticButtonText[0] === "+") {
-                  setNumberOfCriticGames(48);
-                  setCriticButtonText("- Critic Favorite Games");
-                } else {
-                  setNumberOfCriticGames(12);
-                  setCriticButtonText("+ Critic Favorite Games");
+            </div>
+          </Header>
+          <motion.div
+            variants={lineAnim}
+            ref={element3}
+            initial="hidden"
+            animate={controls3}
+            className="line"
+          ></motion.div>
+        </StickyTop>
+        <Games ref={elementHeader3}>
+          {highest_rated
+            ?.slice(0, numberOfFavoriteGames)
+            .map((game) =>
+              favoriteFilterClicked ? (
+                <EmptyBox />
+              ) : game.reviews_count > 15 ? (
+                <Game game={game} key={game.id} />
+              ) : (
+                ""
+              )
+            )}
+        </Games>
+        <Button>
+          <button
+            onClick={() => {
+              if (favoriteButtonText[0] === "+") {
+                setNumberOfFavoriteGames(48);
+                setFavoriteButtonText("- Fan Favorite Games");
+              } else {
+                setNumberOfFavoriteGames(12);
+                setFavoriteButtonText("+ Fan Favorite Games");
+                document.getElementById("favorite").scrollIntoView();
+              }
+            }}
+          >
+            {favoriteButtonText}
+          </button>
+        </Button>
+        {/* -------------------------------------------------------------------------------------------------------------------------------------- */}
+        <div id="critic" className="start_of_category"></div>
+        <StickyTop
+          id="critic_header"
+          variants={opacityOnOff}
+          initial="show"
+          animate={controlsHeader4}
+        >
+          <Header>
+            <h2>Critic Favorite Games</h2>
+            <div className="filter">
+              <button
+                onClick={() => {
+                  updateSelectedHandler("c1Y");
                   document.getElementById("critic").scrollIntoView();
-                }
-              }}
-            >
-              {criticButtonText}
-            </button>
-          </Button>
-          {/* -------------------------------------------------------------------------------------------------------------------------------------- */}
-          <div id="new" className="start_of_category"></div>
-          <StickyTop id="new_header">
-            <Header>
-              <h2 id="new">Newly Added Games</h2>
-            </Header>
-            <motion.div
-              variants={lineAnim}
-              ref={element5}
-              initial="hidden"
-              animate={controls5}
-              className="line"
-            ></motion.div>
-          </StickyTop>
-          <Games>
-            {recent.slice(0, numberOfNewGames).map((game) => (
-              <Game game={game} key={game.id} />
-            ))}
-          </Games>
-          <Button>
-            <button
-              onClick={() => {
-                if (newButtonText[0] === "+") {
-                  setNumberOfNewGames(48);
-                  setNewButtonText("- Newly Added Games");
-                } else {
-                  setNumberOfNewGames(12);
-                  setNewButtonText("+ Newly Added Games");
-                  document.getElementById("new").scrollIntoView();
-                }
-              }}
-            >
-              {newButtonText}
-            </button>
-          </Button>
-          {/* </AnimateSharedLayout> */}
-        </GameList>
-      )}
+                }}
+                id="c1Y"
+                className={criticFilter[0].isSelected}
+              >
+                1Y
+              </button>
+              <button
+                onClick={() => {
+                  updateSelectedHandler("c2Y");
+                  document.getElementById("critic").scrollIntoView();
+                }}
+                id="c2Y"
+                className={criticFilter[1].isSelected}
+              >
+                2Y
+              </button>
+              <button
+                onClick={() => {
+                  updateSelectedHandler("c3Y");
+                  document.getElementById("critic").scrollIntoView();
+                }}
+                id="c3Y"
+                className={criticFilter[2].isSelected}
+              >
+                3Y
+              </button>
+              <button
+                onClick={() => {
+                  updateSelectedHandler("c5Y");
+                  document.getElementById("critic").scrollIntoView();
+                }}
+                id="c5Y"
+                className={criticFilter[3].isSelected}
+              >
+                5Y
+              </button>
+              <div className="icon">
+                <img src={calendar} alt="calendar" />
+              </div>
+            </div>
+          </Header>
+          <motion.div
+            variants={lineAnim}
+            ref={element4}
+            initial="hidden"
+            animate={controls4}
+            className="line"
+          ></motion.div>
+        </StickyTop>
+        <Games ref={elementHeader4}>
+          {highest_metacritic
+            ?.slice(0, numberOfCriticGames)
+            .map((game) =>
+              criticFilterClicked ? (
+                <EmptyBox />
+              ) : (
+                <Game game={game} key={game.id} />
+              )
+            )}
+        </Games>
+        <Button>
+          <button
+            onClick={() => {
+              if (criticButtonText[0] === "+") {
+                setNumberOfCriticGames(48);
+                setCriticButtonText("- Critic Favorite Games");
+              } else {
+                setNumberOfCriticGames(12);
+                setCriticButtonText("+ Critic Favorite Games");
+                document.getElementById("critic").scrollIntoView();
+              }
+            }}
+          >
+            {criticButtonText}
+          </button>
+        </Button>
+        {/* -------------------------------------------------------------------------------------------------------------------------------------- */}
+        <div id="new" className="start_of_category"></div>
+        <StickyTop id="new_header">
+          <Header>
+            <h2 id="new">Newly Added Games</h2>
+          </Header>
+          <motion.div
+            variants={lineAnim}
+            ref={element5}
+            initial="hidden"
+            animate={controls5}
+            className="line"
+          ></motion.div>
+        </StickyTop>
+        <Games>
+          {recent?.slice(0, numberOfNewGames).map((game) => (
+            <Game game={game} key={game.id} />
+          ))}
+        </Games>
+        <Button>
+          <button
+            onClick={() => {
+              if (newButtonText[0] === "+") {
+                setNumberOfNewGames(48);
+                setNewButtonText("- Newly Added Games");
+              } else {
+                setNumberOfNewGames(12);
+                setNewButtonText("+ Newly Added Games");
+                document.getElementById("new").scrollIntoView();
+              }
+            }}
+          >
+            {newButtonText}
+          </button>
+        </Button>
+        {/* </AnimateSharedLayout> */}
+      </GameList>
+      {/* )} */}
     </>
   );
 };

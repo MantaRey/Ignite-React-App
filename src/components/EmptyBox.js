@@ -14,7 +14,7 @@ const EmptyBox = () => {
 const StyledEmptyBox = styled(motion.div)`
   /* background: #a5a5a5; */
   background: rgba(165, 165, 165, 0.2);
-  min-height: 50vh;
+  min-height: 45vh;
   border-radius: 0.5rem;
 `;
 
