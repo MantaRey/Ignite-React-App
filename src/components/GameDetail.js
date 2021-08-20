@@ -20,6 +20,8 @@ import starQuarter from "../img/star_quarter.svg";
 import starHalf from "../img/star_half.svg";
 import starThreeQuarter from "../img/star_three_quarter.svg";
 import starFull from "../img/star_full.svg";
+//Back Button Image
+import cancel_button from "../img/cancel.svg";
 
 const GameDetail = ({ pathId }) => {
   //Current URL info
@@ -34,7 +36,10 @@ const GameDetail = ({ pathId }) => {
   //Exit Details Component by clicking on Card Shadow, Redirect to Home
   const exitDetailsHandler = (e) => {
     const element = e.target;
-    if (element.classList.contains("shadow")) {
+    if (
+      element.classList.contains("shadow") ||
+      element.classList.contains("back-button")
+    ) {
       // history.push("/");
       history.goBack(); // This works exactly as the back button therefore Home is not refreshing, just simply going back. Was originally pushing Home page up a little from where Game Card had been originally clicked (unwanted behaviour)
     }
@@ -82,8 +87,6 @@ const GameDetail = ({ pathId }) => {
 
   //Data and Check if data is loaded
   const { game, screen, isLoading } = useSelector((state) => state.details);
-  // console.log(game.publishers);
-  // console.log(game.developers);
 
   return (
     <>
@@ -104,16 +107,38 @@ const GameDetail = ({ pathId }) => {
                           rel="noreferrer" //I have no idea why it is telling me to do this... Might take it out after launch
                         >
                           <h1 className="active">{game.name}</h1>
-                          {game.publishers?.slice(0, 2).map((data) => (
+                          <p>
+                            {game.publishers?.slice(0, 1)[0]
+                              ? `| ${game.publishers.slice(0, 1)[0].name}`
+                              : ""}
+                          </p>
+                          <p>
+                            {game.developers?.slice(0, 1)[0]?.name !==
+                            game.publishers?.slice(0, 1)[0]?.name
+                              ? `| ${game.developers?.slice(0, 1)[0]?.name}`
+                              : ""}
+                          </p>
+                          {/* {game.publishers?.slice(0, 2).map((data) => (
                             <p key={data.name}>| {data.name}</p>
-                          ))}
+                          ))} */}
                         </a>
                       ) : (
                         <div>
                           <h1 title="No Official Website Given">{game.name}</h1>
-                          {game.publishers?.slice(0, 2).map((data) => (
+                          <p>
+                            {game.publishers?.slice(0, 1)[0]
+                              ? `| ${game.publishers.slice(0, 1)[0].name}`
+                              : ""}
+                          </p>
+                          <p>
+                            {game.developers?.slice(0, 1)[0]?.name !==
+                            game.publishers?.slice(0, 1)[0]?.name
+                              ? `| ${game.developers?.slice(0, 1)[0]?.name}`
+                              : ""}
+                          </p>
+                          {/* {game.publishers?.slice(0, 2).map((data) => (
                             <p key={data.name}>| {data.name}</p>
-                          ))}
+                          ))} */}
                         </div>
                       )}
                     </Title>
@@ -129,6 +154,14 @@ const GameDetail = ({ pathId }) => {
                   </motion.div>
                   <div className="line"></div>
                 </Info>
+                <BackButton>
+                  <input
+                    className="back-button"
+                    alt="back button"
+                    type="image"
+                    src={cancel_button}
+                  />
+                </BackButton>
                 <Stats>
                   <h3>Platforms</h3>
                   <Platforms
@@ -227,6 +260,34 @@ const CardShadow = styled(motion.div)`
   }
   &::-webkit-scrollbar-track {
     background: white;
+  }
+`;
+
+const BackButton = styled(motion.div)`
+  display: flex;
+  margin: 0.5rem 0rem 0rem 0.5rem;
+  border: none;
+  input {
+    width: 2rem;
+    height: 2rem;
+    @media (max-width: 580px) {
+      width: 1.75rem;
+      height: 1.75rem;
+    }
+    @media (max-width: 426px) {
+      width: 1.75rem;
+      height: 1.75rem;
+    }
+    @media (max-width: 376px) {
+      width: 1.7rem;
+      height: 1.7rem;
+    }
+  }
+  @media (min-width: 769px) {
+    display: none;
+  }
+  @media (max-width: 426px) {
+    margin: 0.25rem 0rem 0rem 0.5rem;
   }
 `;
 

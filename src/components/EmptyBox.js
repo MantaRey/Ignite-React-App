@@ -9,8 +9,23 @@ const EmptyBox = () => {
 
 const StyledEmptyBox = styled(motion.div)`
   background: rgba(165, 165, 165, 0.2);
-  min-height: 45vh;
+  height: 45vh;
   border-radius: 0.5rem;
+  @media (max-width: 1024px) {
+    height: 40vh;
+  }
+  @media (max-width: 768px) {
+    height: 40vh;
+  }
+  @media (max-width: 580px) {
+    height: 35vh;
+  }
+  @media (max-width: 426px) {
+    height: 30vh;
+  }
+  @media (max-width: 321px) {
+    height: 25vh;
+  }
 `;
 
 export default EmptyBox;
