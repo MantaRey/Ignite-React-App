@@ -5,7 +5,13 @@ import { useHistory } from "react-router-dom";
 //Styling and Animation
 import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
-import { titleAnim, ratingAnim, platformAnim, parent } from "../animations";
+import {
+  titleAnim,
+  ratingAnim,
+  platformAnim,
+  parent,
+  platformMobileAnim,
+} from "../animations";
 import { smallImage } from "../util";
 //System Images
 import playstation from "../img/playstation.svg";
@@ -185,9 +191,16 @@ const GameDetail = ({ pathId }) => {
               </Important>
               <StatsMobileView>
                 <h3>Platforms</h3>
-                <PlatformsMobileView>
+                <PlatformsMobileView
+                  variants={parent}
+                  initial="hidden"
+                  animate="show"
+                >
                   {game.platforms?.map((data) => (
-                    <PlatformMobileView key={data.platform.id}>
+                    <PlatformMobileView
+                      key={data.platform.id}
+                      variants={platformMobileAnim}
+                    >
                       <img
                         src={getPlatform(data.platform.name)}
                         alt={data.platform.name}
