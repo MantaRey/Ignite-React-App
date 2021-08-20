@@ -20,7 +20,6 @@ const Nav = () => {
   const submitSearch = (e) => {
     e.preventDefault();
     dispatch(fetchSearch(textInput));
-    // setTextInput("");
   };
   const clearSearchResults = () => {
     setTextInput("");
@@ -70,7 +69,6 @@ const StyledNav = styled(motion.nav)`
   input {
     width: 30%;
     min-height: 4vh;
-    /* font-size: 1.5rem; */
     font-size: 1.2vw;
     padding: 0.5rem;
     border: none;
@@ -119,7 +117,6 @@ const StyledNav = styled(motion.nav)`
   }
   button {
     min-height: 4vh;
-    /* font-size: 1.5rem; */
     font-size: 1.2vw;
     margin-top: 1rem;
     border: none;
@@ -167,8 +164,6 @@ const Logo = styled(motion.div)`
     padding: 0.5rem;
   }
   img {
-    /* width: 2rem;
-    height: 2rem; */
     width: 2.5vw;
     height: 2.5vw;
     @media (max-width: 1800px) {
@@ -182,12 +177,10 @@ const Logo = styled(motion.div)`
     @media (max-width: 580px) {
       width: 1.5rem;
       height: 1.5rem;
-      /* padding: 0.5rem; */
     }
     @media (max-width: 426px) {
       width: 1.5rem;
       height: 1.5rem;
-      /* padding: 0.5rem; */
     }
   }
   &:hover {

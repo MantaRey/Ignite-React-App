@@ -8,7 +8,6 @@ const initState = {
   popular_filter: false,
   favorite_filter: false,
   critic_filter: false,
-  // isLoading: true,
 };
 
 const gamesReducer = (state = initState, action) => {
@@ -21,13 +20,7 @@ const gamesReducer = (state = initState, action) => {
         upcoming: action.payload.upcoming,
         highest_rated: action.payload.highest_rated,
         highest_metacritic: action.payload.highest_metacritic,
-        // isLoading: false,
       };
-    // case "LOADING_GAMES":
-    //   return {
-    //     ...state,
-    //     isLoading: true,
-    //   };
     case "LOADING_FROM_LOCAL":
       return {
         ...state,

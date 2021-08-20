@@ -12,13 +12,16 @@ import {
 import Game from "../components/Game";
 import GameDetail from "../components/GameDetail";
 import EmptyBox from "../components/EmptyBox";
+import Preloader from "../components/Preloader";
 //Styling and Animation
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { useScroll } from "../components/useScroll";
 import { useScrollHeader } from "../components/useScrollHeader";
 import { lineAnim, opacityOnOff } from "../animations";
+//Images
 import calendar from "../img/calendar.svg";
+import fire from "../img/logo_lit.svg";
 //Scrolling
 import disableScroll from "disable-scroll";
 //Routing
@@ -201,10 +204,12 @@ const Home = () => {
       {/* prevents scrolling while content is loading */}
       {!isLoading && disableScroll.off()}
       {/* re-enables scrolling once content has loaded */}
-      {/* {!isLoading && ( */}
       <GameList>
+        {/* <AnimateSharedLayout> */}
+        {/* <AnimatePresence> */}
         {(pathGameID && <GameDetail pathId={pathGameID} />) ||
           scrollBarHandler()}
+        {/* </AnimatePresence> */}
 
         {searched.length ? (
           // truthy vs falsey values, searched is initially empty array (=== true), searched.length when empty is 0 (===false)
@@ -252,6 +257,16 @@ const Home = () => {
             className="line"
           ></motion.div>
         </StickyTop>
+        {isLoading && (
+          <>
+            <Preloader></Preloader>
+            <Loading>
+              <img id="fire_left" src={fire} alt="website logo" />
+              <h3>Loading Games...</h3>
+              <img id="fire_right" src={fire} alt="website logo" />
+            </Loading>
+          </>
+        )}
         <Games ref={elementHeader1} id="upcoming_container">
           {!isLoading &&
             upcoming
@@ -269,7 +284,6 @@ const Home = () => {
                 setUpcomingButtonText("+ Upcoming Games");
                 document.getElementById("upcoming").scrollIntoView();
               }
-              // getMoreGames("upcoming");
             }}
           >
             {upcomingButtonText}
@@ -344,7 +358,7 @@ const Home = () => {
             ?.slice(0, numberOfPopularGames)
             .map((game) =>
               popularFilterClicked ? (
-                <EmptyBox />
+                <EmptyBox key={game.id} />
               ) : (
                 <Game game={game} key={game.id} />
               )
@@ -435,7 +449,7 @@ const Home = () => {
             ?.slice(0, numberOfFavoriteGames)
             .map((game) =>
               favoriteFilterClicked ? (
-                <EmptyBox />
+                <EmptyBox key={game.id} />
               ) : game.reviews_count > 15 ? (
                 <Game game={game} key={game.id} />
               ) : (
@@ -528,7 +542,7 @@ const Home = () => {
             ?.slice(0, numberOfCriticGames)
             .map((game) =>
               criticFilterClicked ? (
-                <EmptyBox />
+                <EmptyBox key={game.id} />
               ) : (
                 <Game game={game} key={game.id} />
               )
@@ -587,10 +601,22 @@ const Home = () => {
         </Button>
         {/* </AnimateSharedLayout> */}
       </GameList>
-      {/* )} */}
     </>
   );
 };
+
+const Loading = styled(motion.div)`
+  /* background: lightblue; */
+  padding: 0rem 0rem 5rem 0rem;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  h2 {
+  }
+  img {
+    padding: 0rem 1rem;
+  }
+`;
 
 const GameList = styled(motion.div)`
   background: rgba(179, 210, 221, 0.02); //Added this. Might change back later.
@@ -647,21 +673,10 @@ const StickyTop = styled(motion.div)`
   @media (max-width: 768px) {
     top: -0.5rem;
   }
-  /* @media (max-width: 1536px) {
-    top: -4rem;
-  }
-  @media (max-width: 768px) {
-    top: -3rem;
-  }
-  @media (max-width: 426px) {
-    top: -1.5rem;
-  } */
 `;
 
 const Header = styled(motion.div)`
-  /* background: rgba(255, 255, 255, 0.5); */
   background: rgba(255, 255, 255, 0.5);
-  /* box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2); */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -833,7 +848,6 @@ const Button = styled(motion.div)`
 
 const Games = styled(motion.div)`
   min-height: 40vh;
-  /* min-height: 80vh; */ //Changed becuz Search Results less than intended where formatted oddly
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(20%, 1fr));
   // ^^^ Changed from 500px
@@ -841,58 +855,41 @@ const Games = styled(motion.div)`
   grid-row-gap: 3rem;
   @media (max-width: 1800px) {
     grid-template-columns: repeat(auto-fit, minmax(425px, 1fr));
-    /* grid-column-gap: 2.5rem;
-    grid-row-gap: 4rem; */
     grid-column-gap: 2rem;
     grid-row-gap: 2rem;
   }
   @media (max-width: 1675px) {
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    /* grid-column-gap: 2.5rem;
-    grid-row-gap: 4rem; */
     grid-column-gap: 2rem;
     grid-row-gap: 2rem;
   }
   @media (max-width: 1536px) {
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    /* grid-column-gap: 2.5rem;
-    grid-row-gap: 4rem; */
     grid-column-gap: 2rem;
     grid-row-gap: 2rem;
   }
   @media (max-width: 1440px) {
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    /* grid-column-gap: 2.5rem;
-    grid-row-gap: 4rem; */
     grid-column-gap: 2rem;
     grid-row-gap: 2rem;
   }
   @media (max-width: 1294px) {
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    /* grid-column-gap: 2.5rem;
-    grid-row-gap: 4rem; */
     grid-column-gap: 2rem;
     grid-row-gap: 2rem;
   }
   @media (max-width: 1250px) {
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    /* grid-column-gap: 2.5rem;
-    grid-row-gap: 4rem; */
     grid-column-gap: 2rem;
     grid-row-gap: 2rem;
   }
   @media (max-width: 1140px) {
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    /* grid-column-gap: 2.5rem;
-    grid-row-gap: 4rem; */
     grid-column-gap: 2rem;
     grid-row-gap: 2rem;
   }
   @media (max-width: 1024px) {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    // used to be 400px for only 2 columns, now is 3 columns like Tablet
-    /* grid-column-gap: 2rem;
-    grid-row-gap: 3rem; */
     grid-column-gap: 2rem;
     grid-row-gap: 2rem;
   }

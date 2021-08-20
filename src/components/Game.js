@@ -5,13 +5,11 @@ import { loadDetails } from "../actions/detailsAction";
 //Styling and Animation
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { smallImage } from "../util";
 import { useScroll } from "../components/useScroll";
 import { gameCardReveal } from "../animations";
+import { smallImage } from "../util";
 //Routing
 import { Link } from "react-router-dom";
-//Scrolling
-import disableScroll from "disable-scroll";
 
 const Game = ({ game }) => {
   //possible data to extract at a later data: rating, esrb_rating, genres,
@@ -33,9 +31,6 @@ const Game = ({ game }) => {
   //Scroll Animation Set-up for Individual Games
   const [element, controls] = useScroll();
 
-  //Re-enables the scrolling that I disabled in EmptyBox.js
-  disableScroll.off(); // re-enable scroll
-
   return (
     <>
       {!isLoading && (
@@ -53,7 +48,6 @@ const Game = ({ game }) => {
             <motion.h3>{name}</motion.h3>
             <p>{released}</p>
             <motion.img
-              layoutId={`image ${stringPathId}`}
               src={
                 background_image
                   ? smallImage(background_image, 1280)
@@ -78,15 +72,12 @@ const StyledGame = styled(motion.div)`
   min-height: 30vh;
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
   text-align: center;
-  border-radius: 0.5rem; //Changed from 1rem original
+  border-radius: 0.5rem;
   cursor: pointer;
   overflow: hidden;
   @media (max-width: 1536px) {
     min-height: 30vh;
   }
-  /* @media (max-width: 768px) {
-    min-height: 25vh;
-  } */
   @media (max-width: 426px) {
     min-height: 20vh;
   }
@@ -123,7 +114,6 @@ const StyledGame = styled(motion.div)`
     }
   }
   h3 {
-    /* background: rgba(173, 216, 230, 0.2); //Can always change this later */
     @media (max-width: 768px) {
       padding-left: 0.5rem;
       padding-right: 0.5rem;

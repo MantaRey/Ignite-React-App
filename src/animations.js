@@ -21,7 +21,6 @@ export const popUp_fadeIn = {
 
 //Scroll Animation => Game Cards
 export const gameCardReveal = {
-  //Added "scale" recently but willing to take it back
   hidden: { opacity: 0, scale: 0.5, transition: { duration: 0.5 } },
   show: {
     opacity: 1,

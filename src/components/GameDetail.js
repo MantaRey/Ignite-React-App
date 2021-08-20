@@ -4,13 +4,8 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 //Styling and Animation
 import styled from "styled-components";
-import { motion } from "framer-motion";
-import {
-  titleAnim,
-  ratingAnim,
-  platformAnim,
-  parent,
-} from "../animations";
+import { motion, AnimatePresence } from "framer-motion";
+import { titleAnim, ratingAnim, platformAnim, parent } from "../animations";
 import { smallImage } from "../util";
 //System Images
 import playstation from "../img/playstation.svg";
@@ -48,7 +43,6 @@ const GameDetail = ({ pathId }) => {
   //Get Rating Stars
   const getStars = () => {
     const stars = [];
-    // const rating = Math.floor(game.rating);
     let rating = game.rating;
     for (let i = 1; i <= 5; i++) {
       rating = rating - 1;
@@ -88,119 +82,123 @@ const GameDetail = ({ pathId }) => {
 
   //Data and Check if data is loaded
   const { game, screen, isLoading } = useSelector((state) => state.details);
+  // console.log(game.publishers);
+  // console.log(game.developers);
 
   return (
     <>
       {!isLoading && (
-        <CardShadow className="shadow" onClick={exitDetailsHandler}>
-          {scrollBarHandler()}
-          <Detail layoutId={pathId}>
-            <Important variants={parent} initial="hidden" animate="show">
-              <Info>
-                <Header>
-                  <Title variants={titleAnim}>
-                    {game.website !== "" ? (
-                      <a
-                        href={game.website}
-                        target="_blank"
-                        title={game.website}
-                        rel="noreferrer" //I have no idea why it is telling me to do this... Might take it out after launch
-                      >
-                        <h1 className="active">{game.name}</h1>
-                        {game.publishers.slice(0, 2).map((data) => (
-                          <p key={data.name}>| {data.name}</p>
-                        ))}
-                      </a>
-                    ) : (
-                      <div>
-                        <h1 title="No Official Website Given">{game.name}</h1>
-                        {game.publishers.slice(0, 2).map((data) => (
-                          <p key={data.name}>| {data.name}</p>
-                        ))}
-                      </div>
-                    )}
-                  </Title>
-                </Header>
-                <motion.div className="rating" variants={ratingAnim}>
-                  <div className="metacritic">
-                    <p>
-                      Metacritic: {game.metacritic ? game.metacritic : "N/A"}
-                    </p>
-                  </div>
-                  <p>Rating: {game.rating}</p>
-                  <div className="stars">{getStars()}</div>
-                </motion.div>
-                {/* <motion.div variants={lineAnim} className="line"></motion.div> */}
-                <div className="line"></div>
-              </Info>
-              <Stats>
+        <AnimatePresence>
+          <CardShadow className="shadow" onClick={exitDetailsHandler}>
+            {scrollBarHandler()}
+            <Detail layoutId={pathId}>
+              <Important variants={parent} initial="hidden" animate="show">
+                <Info>
+                  <Header>
+                    <Title variants={titleAnim}>
+                      {game.website !== "" ? (
+                        <a
+                          href={game.website}
+                          target="_blank"
+                          title={game.website}
+                          rel="noreferrer" //I have no idea why it is telling me to do this... Might take it out after launch
+                        >
+                          <h1 className="active">{game.name}</h1>
+                          {game.publishers?.slice(0, 2).map((data) => (
+                            <p key={data.name}>| {data.name}</p>
+                          ))}
+                        </a>
+                      ) : (
+                        <div>
+                          <h1 title="No Official Website Given">{game.name}</h1>
+                          {game.publishers?.slice(0, 2).map((data) => (
+                            <p key={data.name}>| {data.name}</p>
+                          ))}
+                        </div>
+                      )}
+                    </Title>
+                  </Header>
+                  <motion.div className="rating" variants={ratingAnim}>
+                    <div className="metacritic">
+                      <p>
+                        Metacritic: {game.metacritic ? game.metacritic : "N/A"}
+                      </p>
+                    </div>
+                    <p>Rating: {game.rating}</p>
+                    <div className="stars">{getStars()}</div>
+                  </motion.div>
+                  <div className="line"></div>
+                </Info>
+                <Stats>
+                  <h3>Platforms</h3>
+                  <Platforms
+                    variants={platformAnim}
+                    inital="hidden"
+                    animate="show"
+                  >
+                    {game.platforms?.map((data) => (
+                      <Platform key={data.platform.id}>
+                        <img
+                          src={getPlatform(data.platform.name)}
+                          alt={data.platform.name}
+                          title={data.platform.name}
+                        />
+                        <p>{data.platform.name}</p>
+                      </Platform>
+                    ))}
+                    {/* slice(0,6) used for formatting issues, e.g. Pac Man has 20 platforms and it looked horrible LOL */}
+                  </Platforms>
+                </Stats>
+              </Important>
+              <StatsMobileView>
                 <h3>Platforms</h3>
-                <Platforms
-                  variants={platformAnim}
-                  inital="hidden"
-                  animate="show"
-                >
+                <PlatformsMobileView>
                   {game.platforms?.map((data) => (
-                    <Platform key={data.platform.id}>
+                    <PlatformMobileView key={data.platform.id}>
                       <img
                         src={getPlatform(data.platform.name)}
                         alt={data.platform.name}
                         title={data.platform.name}
                       />
                       <p>{data.platform.name}</p>
-                    </Platform>
+                    </PlatformMobileView>
                   ))}
-                  {/* slice(0,6) used for formatting issues, e.g. Pac Man has 20 platforms and it looked horrible LOL */}
-                </Platforms>
-              </Stats>
-            </Important>
-            <StatsMobileView>
-              <h3>Platforms</h3>
-              <PlatformsMobileView>
-                {game.platforms?.map((data) => (
-                  <PlatformMobileView key={data.platform.id}>
+                </PlatformsMobileView>
+                <div className="line"></div>
+              </StatsMobileView>
+              <Media>
+                <motion.img
+                  src={
+                    game.background_image
+                      ? smallImage(game.background_image, 1280)
+                      : game.background_image
+                  }
+                  alt={game.name}
+                />
+              </Media>
+              <Description>
+                <p>
+                  {game.description_raw
+                    ? game.description_raw
+                    : game.description}
+                </p>
+              </Description>
+              <Gallery>
+                {screen?.map((screenshot) =>
+                  screenshot.id !== -1 ? (
                     <img
-                      src={getPlatform(data.platform.name)}
-                      alt={data.platform.name}
-                      title={data.platform.name}
+                      src={smallImage(screenshot.image, 1280)}
+                      key={screenshot.id}
+                      alt="In-game screenshot"
                     />
-                    <p>{data.platform.name}</p>
-                  </PlatformMobileView>
-                ))}
-              </PlatformsMobileView>
-              <div className="line"></div>
-            </StatsMobileView>
-            <Media>
-              <motion.img
-                layoutId={`image ${pathId}`}
-                src={
-                  game.background_image
-                    ? smallImage(game.background_image, 1280)
-                    : game.background_image
-                }
-                alt={game.name}
-              />
-            </Media>
-            <Description>
-              <p>
-                {game.description_raw ? game.description_raw : game.description}
-              </p>
-            </Description>
-            <Gallery>
-              {screen?.map((screenshot) =>
-                screenshot.id !== -1 ? (
-                  <img
-                    src={smallImage(screenshot.image, 1280)}
-                    key={screenshot.id}
-                    alt="In-game screenshot"
-                  />
-                ) : (
-                  ""
-                )
-              )}
-            </Gallery>
-          </Detail>
-        </CardShadow>
+                  ) : (
+                    ""
+                  )
+                )}
+              </Gallery>
+            </Detail>
+          </CardShadow>
+        </AnimatePresence>
       )}
     </>
   );
@@ -494,7 +492,7 @@ const PlatformMobileView = styled(motion.div)`
 
 const StatsMobileView = styled(motion.div)`
   text-align: center;
-  margin-top: 0.5rem; //This is sometimes applies oddly when I first start up the website. Changed from "margin-top: 0.5" to see if bug fixes itself. Didnt work after..
+  margin-top: 0.5rem; //This sometimes applies oddly when I first start up the website. Changed from "margin-top: 0.5" to see if bug fixes itself...
   @media (min-width: 769px) {
     display: none;
   }
@@ -502,7 +500,5 @@ const StatsMobileView = styled(motion.div)`
     text-align: left;
   }
 `;
-
-//Experimenting: changing 1024px breakpoints to 1380px
 
 export default GameDetail;
